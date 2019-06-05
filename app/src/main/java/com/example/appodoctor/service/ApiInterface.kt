@@ -14,4 +14,6 @@ interface ApiInterface {
     fun getDokterByPoliId(@Query("id") poliId : String?) : Call<DokterResponse>
     @GET("jadwaldokter")
     fun getJadwalByDokterId(@Query("id") dokId : String?) : Call<JadwalResponse>
+    @GET("jadwaldokter?id=1")
+    fun getJadwalByDokterId() : Call<JadwalResponse>
 }
