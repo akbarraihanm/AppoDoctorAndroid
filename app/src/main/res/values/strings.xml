@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AppoDoctor</string>
+    <string name="appbar_scrolling_view_behavior"/>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <array name="poliId">
+        <item>1f</item>
+        <item>2f</item>
+        <item>3f</item>
+    </array>
+
+    <array name="poliName">
+        <item>Anak</item>
+        <item>Gigi</item>
+        <item>Jantung</item>
+    </array>
+
+</resources>
