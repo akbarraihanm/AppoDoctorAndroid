@@ -33,13 +33,10 @@ class ItemJadwalActivity : AppCompatActivity(), JadwalView {
 
         rvJadwal.layoutManager = LinearLayoutManager(this)
 
-        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val call = apiInterface.getJadwalByDokterId(string_id)
-
         tvIfNull.visibility = INVISIBLE
         tvNaDokWhenLoading.visibility = INVISIBLE
-        jadwalPresenter = JadwalPresenter(call, this, this)
-        jadwalPresenter.getJadwalItem()
+        jadwalPresenter = JadwalPresenter(this, this)
+        jadwalPresenter.getJadwalItem(string_id)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -53,11 +50,11 @@ class ItemJadwalActivity : AppCompatActivity(), JadwalView {
         }
     }
 
-    override fun showLoading() {
+    private fun showLoading() {
         pbLoadJadwal.visibility = VISIBLE
     }
 
-    override fun hideLoading() {
+    private fun hideLoading() {
         pbLoadJadwal.visibility = INVISIBLE
     }
 

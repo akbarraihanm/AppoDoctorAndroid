@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.appodoctor.R
 import com.example.appodoctor.activity.BuatJanjiActivity
+import com.example.appodoctor.activity.CekStatusActivity
 import com.example.appodoctor.activity.JadwalActivity
 import com.example.appodoctor.model.ListMenuModel
 import kotlinx.android.synthetic.main.listview_item.view.*
@@ -54,8 +55,8 @@ class ListAdapter(val context : Context, private val listMenuModel : ArrayList<L
                 context.startActivity(intent)
             }
             else {
-                Toast.makeText(context, "Item dipilih : " + listMenuModel[position].menu.toString(), Toast.LENGTH_SHORT)
-                    .show()
+                val i = Intent(context, CekStatusActivity::class.java)
+                context.startActivity(i)
             }
         }
 

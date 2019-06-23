@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        tools:context=".activity.KonfirmasiActivity">
+
+    <ProgressBar
+            android:id="@+id/pbKonfirmasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="260dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+    />
+    <LinearLayout
+            android:id="@+id/linLayKonfirmasi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            tools:context=".activity.KonfirmasiActivity">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data Permintaan"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+        />
+        <android.support.v7.widget.CardView
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nama Pasien"
+                />
+                <TextView
+                        android:id="@+id/tvNamaPasien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="INI NAMA PASIEN"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                />
+                <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Poli yang Dituju"
+                />
+                <TextView
+                        android:id="@+id/tvNamaPoli"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="POLI TUJUAN"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                />
+                <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dokter yang Dituju"
+                />
+                <TextView
+                        android:id="@+id/tvNamaDokter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="DOKTER TUJUAN"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                />
+                <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tanggal"
+                />
+                <TextView
+                        android:id="@+id/tvTanggal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="TANGGAL TUJUAN"
+                        android:textSize="17sp"
+                        android:textColor="#000"
+                />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+        <Button
+                android:layout_marginTop="30dp"
+                android:id="@+id/btBuatJanji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buat Janji"
+                android:textColor="#ffffff"
+                android:backgroundTint="@color/colorPrimary"
+        />
+        <Button
+                android:layout_marginTop="5dp"
+                android:id="@+id/btBatal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Batal"
+        />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

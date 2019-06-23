@@ -1,11 +1,8 @@
 package com.example.appodoctor.service
 
-import com.example.appodoctor.model.DokterResponse
-import com.example.appodoctor.model.JadwalResponse
-import com.example.appodoctor.model.PoliResponse
-import retrofit2.http.GET
+import com.example.appodoctor.model.*
 import retrofit2.Call
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiInterface {
 
@@ -13,10 +10,46 @@ interface ApiInterface {
     fun getDokterByPoli() : Call<DokterResponse>
     @GET("dokterpoli")
     fun getDokterByPoliId(@Query("id") poliId : String?) : Call<DokterResponse>
+
     @GET("jadwaldokter")
     fun getJadwalByDokterId(@Query("id") dokId : String?) : Call<JadwalResponse>
     @GET("jadwaldokter?id=1")
-    fun getJadwalByDokterId() : Call<JadwalResponse>
+    fun getJadwalByDokter() : Call<JadwalResponse>
+
     @GET("poli")
     fun getPoliName() : Call<PoliResponse>
+
+    @GET("pasienid")
+    fun getPasienData(@Query("id") pasienId : String?) : Call<PasienResponse>
+
+    @GET("appo/pasien")
+    fun getAppoByPasienId(@Query("id") pasienId: String?) : Call<AppoResponse>
+
+    @POST("appo")
+    @FormUrlEncoded
+    fun postAppoData(@Field("tanggal") tappo : String?,
+                     @Field("pasien_id") pid : String?,
+                     @Field("dokter_id") doid : String?,
+                     @Field("poli_id") poid : String?) : Call<PostAppo>
+
+    @POST("pasien/login")
+    @FormUrlEncoded
+    fun postLogin(@Field("norm_pasien") norm : String?,
+                  @Field("password") password : String?) : Call<LoginResponse>
+
+    @POST("dokter/login")
+    @FormUrlEncoded
+    fun postLoginDokter(@Field("notelp") notelp : String?,
+                            @Field("password") pw : String?) : Call<LoginResponse>
+
+    @POST("jadwal")
+    @FormUrlEncoded
+    fun postAddJadwal(@Field("dokter_id") dokterId : String?,
+                      @Field("tanggal") tglAdd : String?,
+                      @Field("jam_mulai") jamMulai : String?,
+                      @Field("jam_selesai") jamSelesai : String?) : Call<JadwalModel>
+
+    @PUT("pasienid")
+    fun putPasienPassword(@Query("id") pasienId : String?,
+                          @Query("password") pw : String?) : Call<PutPwResponse>
 }

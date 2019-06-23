@@ -56,39 +56,42 @@ class JadwalActivity : AppCompatActivity(), DokterView {
 
                 var savedPoliName : ArrayList<String?> = arrayListOf()
                 var savedPoliId : ArrayList<String?> = arrayListOf()
-
-                for(i in poli.indices){
-                    savedPoliName.add(poli[i].namaPoli)
-                    savedPoliId.add(poli[i].idPoli)
-                }
-
-                val spinnerPoliAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, savedPoliName)
-                spinnerPoli.adapter = spinnerPoliAdapter
-                spinnerPoli.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-
+                try{
+                    for(i in poli.indices){
+                        savedPoliName.add(poli[i].namaPoli)
+                        savedPoliId.add(poli[i].idPoli)
                     }
 
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        poliNameString = spinnerPoli.selectedItem.toString()
-                        tvIfNull.visibility = INVISIBLE
-                        showLoading()
-                        rvDokter.adapter = null
+//                    showLoading()
 
-                        val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
-                        val call = apiInterface2.getDokterByPoliId(savedPoliId[position]!!)
-                        dokterPresenter = DokterPresenter(call, this@JadwalActivity, this@JadwalActivity)
-                        dokterPresenter.getDokterItem()
+                    val spinnerPoliAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, savedPoliName)
+                    spinnerPoli.adapter = spinnerPoliAdapter
+                    spinnerPoli.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
+                            val call = apiInterface2.getDokterByPoli()
+                            dokterPresenter = DokterPresenter(call, this@JadwalActivity, this@JadwalActivity)
+                            dokterPresenter.getDokterItem()
+                        }
+
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            poliNameString = spinnerPoli.selectedItem.toString()
+                            tvIfNull.visibility = INVISIBLE
+                            showLoading()
+                            rvDokter.adapter = null
+
+                            val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
+                            val call = apiInterface2.getDokterByPoliId(savedPoliId[position]!!)
+                            dokterPresenter = DokterPresenter(call, this@JadwalActivity, this@JadwalActivity)
+                            dokterPresenter.getDokterItem()
+
+                        }
 
                     }
-
-                }
+                }catch (e:Exception){}
             }
 
         })
-
-        dokterPresenter = DokterPresenter(call, this, this)
-        dokterPresenter.getDokterItem()
 
     }
 

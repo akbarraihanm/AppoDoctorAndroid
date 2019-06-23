@@ -10,9 +10,13 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
+    lateinit var pref : AppPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        pref = AppPreferences(this)
+        pref.setPreferences()
 
         bottomNavigation.isClickable=false
 

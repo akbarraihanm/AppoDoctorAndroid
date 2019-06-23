@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-          package="com.example.appodoctor">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.appodoctor"
+          android:targetSandboxVersion="1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:allowBackup="true"
+            android:appComponentFactory="string free"
             android:icon="@mipmap/ic_hospital"
             android:label="@string/app_name"
+            android:networkSecurityConfig="@xml/network_security_config"
             android:roundIcon="@mipmap/ic_hospital_round"
             android:supportsRtl="true"
-            tools:replace="android:appComponentFactory"
-            android:appComponentFactory="string free"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true"
+            tools:replace="android:appComponentFactory">
+        <activity android:name=".activity.AddJadwalActivity">
+        </activity>
+        <activity android:name=".activity.ListAppoActivity">
+        </activity>
+        <activity android:name=".activity.ManageJadwalActivity">
+        </activity>
+        <activity android:name=".HomeDokterActivity">
+        </activity>
+        <activity android:name=".LoginDokterActivity">
+        </activity>
+        <activity android:name=".activity.CekStatusActivity">
+        </activity>
+        <activity android:name=".activity.KonfirmasiActivity">
+        </activity> <!-- <activity android:name=".Konfirmasi"> -->
+        <!-- </activity> -->
         <activity android:name=".activity.BuatJanjiActivity">
         </activity>
         <activity android:name=".activity.ItemJadwalActivity">
@@ -20,6 +39,8 @@
         <activity android:name=".activity.JadwalActivity">
         </activity>
         <activity android:name=".HomeActivity">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

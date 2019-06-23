@@ -4,15 +4,20 @@ import android.content.Context
 import android.widget.Toast
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.JadwalResponse
+import com.example.appodoctor.service.ApiClient
+import com.example.appodoctor.service.ApiInterface
+//import com.example.appodoctor.view.AddJadwalView
 import com.example.appodoctor.view.JadwalView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class JadwalPresenter(private val call : Call<JadwalResponse>,
-                      private val context: Context,
+class JadwalPresenter(private val context: Context,
                       private val jadView : JadwalView){
-    fun getJadwalItem(){
+    fun getJadwalItem(id : String){
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val call = apiInterface.getJadwalByDokterId(id)
+
         var listJadwal : ArrayList<JadwalModel>
         call.enqueue(object : Callback<JadwalResponse>{
             override fun onFailure(call: Call<JadwalResponse>, t: Throwable) {
@@ -21,7 +26,6 @@ class JadwalPresenter(private val call : Call<JadwalResponse>,
 
             override fun onResponse(call: Call<JadwalResponse>, response: Response<JadwalResponse>) {
                 listJadwal = response.body()!!.data
-                jadView.showLoading()
                 try {
                     jadView.showJadwalItem(listJadwal)
                 }catch (e : Exception){}
@@ -29,4 +33,6 @@ class JadwalPresenter(private val call : Call<JadwalResponse>,
 
         })
     }
+
 }
+

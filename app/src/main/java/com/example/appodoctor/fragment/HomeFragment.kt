@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.appodoctor.AppPreferences
 
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.ListAdapter
@@ -30,6 +31,7 @@ class HomeFragment : Fragment() {
     private var param2: String? = null
 
     lateinit var listAdapter: ListAdapter
+    lateinit var pref : AppPreferences
 //    lateinit var listMenuModel : ArrayList<ListMenuModel>
 
     private val listMenu = arrayOf("Jadwal Dokter","Buat Janji", "Cek Status")
@@ -51,6 +53,8 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_home, container, false)
+        pref = AppPreferences(context!!)
+        pref.setPreferences()
 
 //        listMenuModel = populateList()
         listAdapter = ListAdapter(context!!, populateList())
