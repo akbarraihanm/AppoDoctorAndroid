@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.JadwalResponse
+import com.example.appodoctor.model.PutPwResponse
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
 //import com.example.appodoctor.view.AddJadwalView
@@ -29,6 +30,23 @@ class JadwalPresenter(private val context: Context,
                 try {
                     jadView.showJadwalItem(listJadwal)
                 }catch (e : Exception){}
+            }
+
+        })
+    }
+    fun deleteJadwalItem(idJadwal : String){
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val callDelete = apiInterface.deleteJadwal(idJadwal)
+
+        callDelete.enqueue(object : Callback<PutPwResponse>{
+            override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
+                Toast.makeText(context, "Gagal hapus item", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
+                try {
+                    jadView.whenDelete()
+                }catch (e:Exception){}
             }
 
         })

@@ -16,6 +16,9 @@ import com.example.appodoctor.view.JadwalView
 import kotlinx.android.synthetic.main.activity_item_jadwal.*
 
 class ItemJadwalActivity : AppCompatActivity(), JadwalView {
+    override fun whenDelete() {
+
+    }
 
     companion object{
         var string_id = "string_id"

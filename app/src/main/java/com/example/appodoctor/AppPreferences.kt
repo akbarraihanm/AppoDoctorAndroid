@@ -23,6 +23,18 @@ class AppPreferences (private val context: Context){
         return pref.getString(key, "")
     }
 
+    fun setNameUser(name : String){
+        val editor = this.pref.edit()
+        val key = "user_name_key"
+        editor.putString(key,name)
+        editor.apply()
+    }
+
+    fun getNameUser() : String{
+        val key = "user_name_key"
+        return pref.getString(key,"")
+    }
+
     fun setUserId(input : String){
         val editor = this.pref.edit()
         val key = "user_id_key"

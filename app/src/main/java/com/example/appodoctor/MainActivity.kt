@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), LoginView {
         }
     }
 
-    override fun doLogin(id: String, status : String) {
+    override fun doLogin(id: String, status : String, name : String) {
         pref.setUserId(id)
         pref.setUserLogin(status)
         Log.d("uid",pref.getUserId())

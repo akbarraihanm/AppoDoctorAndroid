@@ -7,10 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.appodoctor.R
 import com.example.appodoctor.model.JadwalModel
+import com.example.appodoctor.presenter.JadwalPresenter
+import com.example.appodoctor.view.JadwalView
 import kotlinx.android.synthetic.main.rvmanage_jadwal.view.*
 
-class RvManageJadwalAdapter (private val context: Context, private val listJadwal : ArrayList<JadwalModel>)
+class RvManageJadwalAdapter (private val context: Context, private val listJadwal : ArrayList<JadwalModel>, private val jadwalViewRv: JadwalView)
     : RecyclerView.Adapter<RvManageJadwalAdapter.ManageJadwalViewHolder>(){
+
+    companion object{
+        var id_Jadwal = "id_jadwal"
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): ManageJadwalViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.rvmanage_jadwal, parent, false)
         return ManageJadwalViewHolder(view)
@@ -21,18 +28,24 @@ class RvManageJadwalAdapter (private val context: Context, private val listJadwa
     }
 
     override fun onBindViewHolder(holder: ManageJadwalViewHolder, i: Int) {
-        holder.bind(listJadwal[i])
+        holder.bind(listJadwal[i], context,jadwalViewRv)
     }
 
     class ManageJadwalViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+
         private var lj : JadwalModel? = null
-        fun bind(lj : JadwalModel){
+        fun bind(lj : JadwalModel, con : Context, jadwalView : JadwalView){
+            var deleteJadPres = JadwalPresenter(con,jadwalView)
             this.lj = lj
             with(itemView){
                 with(lj){
+                     id_Jadwal = idJadwal.toString()
                     tvDate.text = tgl
                     tvJamMulai.text = jamMulai
                     tvJamSelesai.text = jamSelesai
+                }
+                btHapus.setOnClickListener {
+                    deleteJadPres.deleteJadwalItem(id_Jadwal)
                 }
             }
         }

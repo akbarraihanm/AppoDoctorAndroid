@@ -25,6 +25,12 @@ interface ApiInterface {
     @GET("appo/pasien")
     fun getAppoByPasienId(@Query("id") pasienId: String?) : Call<AppoResponse>
 
+    @GET("appo/dokter")
+    fun getAppoByDokterId(@Query("id") dokterId : String?) : Call<AppoResponse>
+
+    @GET("appo/id")
+    fun getAppoById(@Query("id") appoId : String?) : Call<AppoResponse>
+
     @POST("appo")
     @FormUrlEncoded
     fun postAppoData(@Field("tanggal") tappo : String?,
@@ -52,4 +58,6 @@ interface ApiInterface {
     @PUT("pasienid")
     fun putPasienPassword(@Query("id") pasienId : String?,
                           @Query("password") pw : String?) : Call<PutPwResponse>
+    @DELETE("jadwalid")
+    fun deleteJadwal(@Query("id") jadwalId : String?) : Call<PutPwResponse>
 }

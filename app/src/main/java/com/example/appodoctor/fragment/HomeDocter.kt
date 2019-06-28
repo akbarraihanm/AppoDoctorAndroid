@@ -51,15 +51,6 @@ class HomeDocter : Fragment() {
             val i = Intent(context!!, ListAppoActivity::class.java)
             startActivity(i)
         }
-
-        view.btKeluar.setOnClickListener {
-
-            pref.setUserId("")
-
-            val i = Intent(context!!, LoginDokterActivity::class.java)
-            startActivity(i)
-            activity!!.finish()
-        }
         return view
     }
 

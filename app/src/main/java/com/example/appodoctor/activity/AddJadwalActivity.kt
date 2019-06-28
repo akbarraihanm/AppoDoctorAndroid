@@ -32,12 +32,6 @@ class AddJadwalActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
     lateinit var timePickerDialog: TimePickerDialog
 
-//    companion object{
-//        var tgl = "a"
-//        var jammulai = "b"
-//        var jamselesai = "c"
-//    }
-
     var tgl : String = ""
     var jammulai : String = ""
     var jamselesai : String = ""

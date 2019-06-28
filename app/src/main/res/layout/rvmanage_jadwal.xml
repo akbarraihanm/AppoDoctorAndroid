@@ -75,6 +75,7 @@
                 />
             </LinearLayout>
             <Button
+                    android:id="@+id/btHapus"
                     android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

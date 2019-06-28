@@ -3,12 +3,15 @@ package com.example.appodoctor.activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils.isEmpty
 import android.util.Log
 import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvManageJadwalAdapter
@@ -35,12 +38,21 @@ class ManageJadwalActivity : AppCompatActivity(), JadwalView {
         var id = pref.getUserId()
         Log.d("hahaha",id)
 
+        swManage.isRefreshing = true
+
+        swManage.setOnRefreshListener {
+            jadwalPresenter = JadwalPresenter(this, this)
+            jadwalPresenter.getJadwalItem(id)
+        }
+
         layoutManage.visibility = INVISIBLE
 
         rvJadwal.layoutManager = LinearLayoutManager(this)
 
         jadwalPresenter = JadwalPresenter(this, this)
         jadwalPresenter.getJadwalItem(id)
+
+//        swManage.isRefreshing = false
 
         btAdd.setOnClickListener {
             val i = Intent(this, AddJadwalActivity::class.java)
@@ -57,18 +69,41 @@ class ManageJadwalActivity : AppCompatActivity(), JadwalView {
         pbLoadJadwal.visibility = INVISIBLE
     }
 
+    override fun whenDelete() {
+        pref = AppPreferences(this)
+        pref.setPreferences()
+        var id = pref.getUserId()
+        rvJadwal.adapter = null
+        showLoading()
+        Handler().postDelayed({
+//            finish()
+//            startActivity(intent)
+            Toast.makeText(this, "Berhasil hapus jadwal", Toast.LENGTH_SHORT).show()
+            jadwalPresenter.getJadwalItem(id)
+        }, 3580)
+    }
+
     override fun showJadwalItem(listJadwal: ArrayList<JadwalModel>) {
         showLoading()
+        swManage.isRefreshing = true
+        pref = AppPreferences(this)
+        pref.setPreferences()
         if(listJadwal.isEmpty()){
+//            swManage.isRefreshing = true
             tvIfNull.visibility = VISIBLE
+            layoutManage.visibility = VISIBLE
+            tvNamaDokter.text = pref.getNameUser()
             tvIfNull.text = "Data Tidak Ada"
             hideLoading()
+            swManage.isRefreshing = false
         }
         else{
+//            swManage.isRefreshing = true
             layoutManage.visibility = VISIBLE
-            tvNamaDokter.text = listJadwal[0].namaDokter
-            rvJadwal.adapter = RvManageJadwalAdapter(this, listJadwal)
+            tvNamaDokter.text = pref.getNameUser()
+            rvJadwal.adapter = RvManageJadwalAdapter(this, listJadwal,this)
             hideLoading()
+            swManage.isRefreshing = false
         }
     }
 

@@ -53,9 +53,10 @@ class LoginDokterActivity : AppCompatActivity(), LoginView {
         }
     }
 
-    override fun doLogin(id: String, status : String) {
+    override fun doLogin(id: String, status : String, name : String) {
         pref.setUserId(id)
         pref.setUserLogin(status)
+        pref.setNameUser(name)
         Log.d("uid",pref.getUserId())
         val intent = Intent(this, HomeDokterActivity::class.java)
         startActivity(intent)

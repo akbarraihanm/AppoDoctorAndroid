@@ -33,4 +33,23 @@ class StatusPresenter (private val statusView: StatusView,
 
         })
     }
+    fun getStatusByIdAppo(id : String){
+        var objItem : ArrayList<Appointment>
+        val apiInterface  = ApiClient.getClient().create(ApiInterface::class.java)
+        val callStatus = apiInterface.getAppoById(id)
+
+        callStatus.enqueue(object : Callback<AppoResponse>{
+            override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
+                Toast.makeText(context, "Gagal ambil item", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<AppoResponse>, response: Response<AppoResponse>) {
+                objItem = response.body()!!.data
+                try {
+                    statusView.showStatusId(objItem)
+                }catch (e:Exception){}
+            }
+
+        })
+    }
 }

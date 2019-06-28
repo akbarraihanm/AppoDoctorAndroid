@@ -16,6 +16,9 @@ import com.example.appodoctor.view.StatusView
 import kotlinx.android.synthetic.main.activity_cek_status.*
 
 class CekStatusActivity : AppCompatActivity(), StatusView {
+    override fun showStatusId(objItem: ArrayList<Appointment>) {
+
+    }
 
     lateinit var pref : AppPreferences
     lateinit var statusPresenter: StatusPresenter

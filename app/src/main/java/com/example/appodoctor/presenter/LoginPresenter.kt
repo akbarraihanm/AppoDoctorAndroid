@@ -25,7 +25,7 @@ class LoginPresenter(private val loginView: LoginView,
                 var statLogin = response.body()
                 try {
                     if(statLogin!!.status == "sukses"){
-                        loginView.doLogin(statLogin!!.idPasien.toString(), statLogin!!.user.toString())
+                        loginView.doLogin(statLogin!!.idPasien.toString(), statLogin!!.user.toString(), "")
                         Toast.makeText(context, "Berhasil masuk",Toast.LENGTH_SHORT).show()
                     }
                     else Toast.makeText(context, "Nomor rekam medis atau password salah", Toast.LENGTH_SHORT).show()
@@ -41,14 +41,14 @@ class LoginPresenter(private val loginView: LoginView,
 
         callLoginDokter.enqueue(object : Callback<LoginResponse>{
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-
+                Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 var statLogin = response.body()
                 try {
                     if(statLogin!!.status == "sukses"){
-                        loginView.doLogin(statLogin!!.idDokter.toString(), statLogin!!.user.toString())
+                        loginView.doLogin(statLogin!!.idDokter.toString(), statLogin!!.user.toString(), statLogin!!.namaDokter.toString())
                         Toast.makeText(context, "Berhasil masuk",Toast.LENGTH_SHORT).show()
                     }
                     else Toast.makeText(context, "Nomor telepon atau password salah", Toast.LENGTH_SHORT).show()

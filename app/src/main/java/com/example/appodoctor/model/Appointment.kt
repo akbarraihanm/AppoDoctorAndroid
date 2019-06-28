@@ -14,5 +14,9 @@ data class Appointment (
     @SerializedName("status_appo")
     var status : String? = null,
     @SerializedName("keterangan")
-    var keterangan : String? = null
+    var keterangan : String? = null,
+    @SerializedName("nama_pasien")
+    var namaPasien : String? = null,
+    @SerializedName("norm_pasien")
+    var noRmPasien : String? = null
 )

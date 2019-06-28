@@ -12,5 +12,7 @@ data class LoginResponse (
     @SerializedName("id_dokter")
     var idDokter : Int? = null,
     @SerializedName("user")
-    var user : String? = null
+    var user : String? = null,
+    @SerializedName("nama_dokter")
+    var namaDokter : String? = null
 )

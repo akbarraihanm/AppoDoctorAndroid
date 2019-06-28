@@ -17,6 +17,8 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:replace="android:appComponentFactory">
+        <activity android:name=".activity.AppoPasienActivity">
+        </activity>
         <activity android:name=".activity.AddJadwalActivity">
         </activity>
         <activity android:name=".activity.ListAppoActivity">
