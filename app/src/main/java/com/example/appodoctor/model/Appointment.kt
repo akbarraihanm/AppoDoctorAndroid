@@ -11,6 +11,12 @@ data class Appointment (
     var namaDokter : String? = null,
     @SerializedName("tanggal")
     var tgl : String? = null,
+    @SerializedName("jadwal_id")
+    var idJadwal : String? = null,
+    @SerializedName("jam_mulai")
+    var jamMulai : String? = null,
+    @SerializedName("jam_selesai")
+    var jamSelesai : String? = null,
     @SerializedName("status_appo")
     var status : String? = null,
     @SerializedName("keterangan")
@@ -18,5 +24,7 @@ data class Appointment (
     @SerializedName("nama_pasien")
     var namaPasien : String? = null,
     @SerializedName("norm_pasien")
-    var noRmPasien : String? = null
+    var noRmPasien : String? = null,
+    @SerializedName("pasien_id")
+    var pasienId : String? = null
 )

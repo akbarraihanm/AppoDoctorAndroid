@@ -7,6 +7,12 @@
         android:layout_margin="20dp"
 
 >
+    <Button
+            android:id="@+id/btTestNotif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sini"
+    />
     <ListView
             android:id="@+id/lvHomeFragment"
             android:layout_width="match_parent"
@@ -16,5 +22,6 @@
     >
 
     </ListView>
+
 
 </RelativeLayout>

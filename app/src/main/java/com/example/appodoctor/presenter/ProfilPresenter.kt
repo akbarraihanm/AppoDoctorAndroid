@@ -5,16 +5,14 @@ import android.content.Intent
 import android.widget.Toast
 import com.example.appodoctor.MainActivity
 import com.example.appodoctor.fragment.ProfileFragment
-import com.example.appodoctor.model.Pasien
-import com.example.appodoctor.model.PasienResponse
-import com.example.appodoctor.model.PutPwResponse
+import com.example.appodoctor.model.*
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
 import com.example.appodoctor.view.ProfilView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
+import kotlin.Exception
 
 class ProfilPresenter (private val profilView: ProfilView,
                        private val context: Context){
@@ -40,6 +38,27 @@ class ProfilPresenter (private val profilView: ProfilView,
 
         })
     }
+
+    fun getProfilDokter(idDokter : String){
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val callProfil = apiInterface.getDokterById(idDokter)
+        var itemDokter : ArrayList<DokterModel>
+        callProfil.enqueue(object : Callback<DokterResponse>{
+            override fun onFailure(call: Call<DokterResponse>, t: Throwable) {
+                Toast.makeText(context, "Gagal ambil item", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<DokterResponse>, response: Response<DokterResponse>) {
+                itemDokter = response.body()!!.data
+                try {
+                    profilView.showLoading()
+                    profilView.showProfilDokter(itemDokter)
+                }catch (e:Exception){}
+            }
+
+        })
+    }
+
     fun updatePassword(idPasien: String,pwPasien : String){
         val putPassword = apiInterface.putPasienPassword(idPasien,pwPasien)
 

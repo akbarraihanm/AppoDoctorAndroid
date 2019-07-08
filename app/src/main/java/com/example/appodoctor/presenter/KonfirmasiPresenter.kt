@@ -2,9 +2,7 @@ package com.example.appodoctor.presenter
 
 import android.content.Context
 import android.widget.Toast
-import com.example.appodoctor.model.PostAppo
-import com.example.appodoctor.model.Pasien
-import com.example.appodoctor.model.PasienResponse
+import com.example.appodoctor.model.*
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
 import com.example.appodoctor.view.KonfirmasiView
@@ -30,6 +28,26 @@ class KonfirmasiPresenter (private val konfirmasiView: KonfirmasiView,
                     konfirmasiView.showLoading()
                     itemPasien = response.body()!!.data
                     konfirmasiView.showItemPasien(itemPasien)
+                }catch (e:Exception){}
+            }
+
+        })
+    }
+
+    fun getJadwalItem(idTgl : String){
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val callJadwal = apiInterface.getJadwalById(idTgl)
+        var itemJadwal : ArrayList<JadwalModel>
+        callJadwal.enqueue(object : Callback<JadwalResponse>{
+            override fun onFailure(call: Call<JadwalResponse>, t: Throwable) {
+                Toast.makeText(context, "Gagal ambil item", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<JadwalResponse>, response: Response<JadwalResponse>) {
+                itemJadwal = response.body()!!.data
+                try {
+                    konfirmasiView.showLoading()
+                    konfirmasiView.showItemJadwal(itemJadwal)
                 }catch (e:Exception){}
             }
 

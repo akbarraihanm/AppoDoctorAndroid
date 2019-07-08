@@ -80,7 +80,7 @@ class ManageJadwalActivity : AppCompatActivity(), JadwalView {
 //            startActivity(intent)
             Toast.makeText(this, "Berhasil hapus jadwal", Toast.LENGTH_SHORT).show()
             jadwalPresenter.getJadwalItem(id)
-        }, 3580)
+        }, 1500)
     }
 
     override fun showJadwalItem(listJadwal: ArrayList<JadwalModel>) {

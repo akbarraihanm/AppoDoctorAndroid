@@ -6,12 +6,20 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.LoginDokterActivity
 
 import com.example.appodoctor.R
+import com.example.appodoctor.model.DokterModel
+import com.example.appodoctor.model.Pasien
+import com.example.appodoctor.presenter.ProfilPresenter
+import com.example.appodoctor.view.ProfilView
+import kotlinx.android.synthetic.main.fragment_profile_dokter.*
 import kotlinx.android.synthetic.main.fragment_profile_dokter.view.*
+import kotlinx.android.synthetic.main.fragment_profile_dokter.view.pbProfil
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,9 +30,10 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class ProfileDokter : Fragment() {
+class ProfileDokter : Fragment(), ProfilView {
 
     lateinit var pref : AppPreferences
+    lateinit var profilPresenter : ProfilPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +43,11 @@ class ProfileDokter : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile_dokter, container, false)
         pref = AppPreferences(context!!)
         pref.setPreferences()
+
+        view.layoutProfil.visibility = INVISIBLE
+
+        profilPresenter = ProfilPresenter(this, context!!)
+        profilPresenter.getProfilDokter(pref.getUserId())
 
         view.btKeluar.setOnClickListener {
 
@@ -47,5 +61,24 @@ class ProfileDokter : Fragment() {
         return view
     }
 
+    override fun showLoading() {
+        pbProfil.visibility = VISIBLE
+    }
+
+    override fun hideLoading() {
+        pbProfil.visibility = INVISIBLE
+    }
+
+    override fun showProfilData(profilData: ArrayList<Pasien>) {
+
+    }
+
+    override fun showProfilDokter(profilDokter: ArrayList<DokterModel>) {
+        layoutProfil.visibility = VISIBLE
+        tvNamaDokter.text = profilDokter[0].namaDokter
+        tvNoTelp.text = profilDokter[0].noTelp
+        tvNamaPoli.text = profilDokter[0].namaPoli
+        hideLoading()
+    }
 
 }

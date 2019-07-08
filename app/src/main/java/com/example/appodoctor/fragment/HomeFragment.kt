@@ -1,14 +1,21 @@
 package com.example.appodoctor.fragment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.NotificationCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import com.example.appodoctor.AppPreferences
+import com.example.appodoctor.HomeActivity
 
 import com.example.appodoctor.R
+import com.example.appodoctor.activity.TestNotificationActivity
 import com.example.appodoctor.adapter.ListAdapter
 import com.example.appodoctor.model.ListMenuModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -32,15 +39,18 @@ class HomeFragment : Fragment() {
 
     lateinit var listAdapter: ListAdapter
     lateinit var pref : AppPreferences
+
+    companion object{
+        var tokenPasien = "asdasd"
+    }
 //    lateinit var listMenuModel : ArrayList<ListMenuModel>
 
     private val listMenu = arrayOf("Jadwal Dokter","Buat Janji", "Cek Status")
-    private val listSubMenu = arrayOf("Melihat jadwal dokter", "Membuat permintaan appointment", "Melihat status appointment")
+    private val listSubMenu = arrayOf("Melihat jadwal dokter", "Membuat permintaan \njanji", "Melihat status \npermintaan janji")
     private val listPictMenu = intArrayOf(R.mipmap.ic_jadwal, R.mipmap.ic_create, R.mipmap.ic_check)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -55,6 +65,14 @@ class HomeFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_home, container, false)
         pref = AppPreferences(context!!)
         pref.setPreferences()
+
+        Log.d("tokenASD", tokenPasien)
+        view.btTestNotif.visibility = GONE
+
+//        view.btTestNotif.setOnClickListener {
+//            val i = Intent(context!!, TestNotificationActivity::class.java)
+//            startActivity(i)
+//        }
 
 //        listMenuModel = populateList()
         listAdapter = ListAdapter(context!!, populateList())
@@ -77,24 +95,4 @@ class HomeFragment : Fragment() {
         return list
     }
 
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

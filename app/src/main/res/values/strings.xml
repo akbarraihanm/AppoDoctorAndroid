@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppoDoctor</string>
+    <string name="app_name">Buat Janji Dengan Dokter</string>
     <string name="appbar_scrolling_view_behavior"/>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -8,6 +8,7 @@
     <string name="ubah_password">Ubah Password</string>
     <string name="password_baru">Password baru</string>
     <string name="tambah_jadwal">Tambah Jadwal</string>
+    <string name="masukkan_keterangan">Masukkan Keterangan</string>
 
     <array name="poliId">
         <item>1f</item>

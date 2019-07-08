@@ -46,6 +46,7 @@ class StatusPresenter (private val statusView: StatusView,
             override fun onResponse(call: Call<AppoResponse>, response: Response<AppoResponse>) {
                 objItem = response.body()!!.data
                 try {
+                    statusView.showLoading()
                     statusView.showStatusId(objItem)
                 }catch (e:Exception){}
             }

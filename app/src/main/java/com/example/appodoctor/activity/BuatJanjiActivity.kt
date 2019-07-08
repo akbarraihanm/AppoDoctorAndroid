@@ -10,17 +10,23 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.model.JadwalModel
+import com.example.appodoctor.model.JadwalResponse
 import com.example.appodoctor.presenter.BuatJanjiPresenter
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
 import com.example.appodoctor.view.BuatJanjiView
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.activity_buat_janji.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, BuatJanjiView {
 
@@ -34,6 +40,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
     lateinit var poliNameString : String
     lateinit var dokterNameString : String
+    lateinit var jamString : String
 
     lateinit var pref : AppPreferences
 
@@ -47,6 +54,9 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         var selectedJadwal = "jadwal"
 
         var idPasien = "idpasien"
+
+        var selectedIdJadwal = "idjadwalasda"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +71,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
         layoutBuatJanji.visibility = INVISIBLE
         tvDataNull.visibility = INVISIBLE
+        tvpilihjadwal.visibility = INVISIBLE
+        spJadwal.visibility = INVISIBLE
 
         supportActionBar?.title = "Buat Janji"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -79,7 +91,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
             intent.putExtra(KonfirmasiActivity.poliName, selectedPoli)
             intent.putExtra(KonfirmasiActivity.dokter_id, selectedIdDokter)
             intent.putExtra(KonfirmasiActivity.dokterName, selectedDokter)
-            intent.putExtra(KonfirmasiActivity.tanggal, selectedJadwal)
+            intent.putExtra(KonfirmasiActivity.tanggal_id, selectedIdJadwal)
             intent.putExtra(KonfirmasiActivity.id_pasien, idPasien)
 
             startActivity(intent)
@@ -151,6 +163,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                 if(selectedJadwal.isEmpty()){
                     btLanjut.alpha = .5f
                     btLanjut.isEnabled = false
+                    spJadwal.visibility = INVISIBLE
+                    tvpilihjadwal.visibility = INVISIBLE
                 }
                 btSelectDate.visibility = INVISIBLE
                 val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
@@ -191,20 +205,29 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
                 var date : Date? = null
 
+                val currenDate = SimpleDateFormat("yyyy-MM-dd")
+                val curDate = currenDate.parse(currenDate.format(Date()))
+
                 for(i in listJadwal.indices){
                     try {
                         date = sdf.parse(listJadwal[i].tgl)
+                        Log.d("isineIki",date.toString())
+                        Log.d("isineIki2",curDate.toString())
                     }catch (e:Exception){}
 
-                    calendar = dateToCalendar(date!!)
+                    if(date!! > curDate){
+                        calendar = dateToCalendar(date!!)
 
-                    val dates : ArrayList<Calendar> = arrayListOf()
+                        val dates : ArrayList<Calendar> = arrayListOf()
 
-                    dates.add(calendar)
+                        dates.add(calendar)
 
-                    val displayedDay = dates.toArray(arrayOfNulls<Calendar>(dates.size))
-                    datePickerDialog.selectableDays = displayedDay
+                        val displayedDay = dates.toArray(arrayOfNulls<Calendar>(dates.size))
+
+                        datePickerDialog.selectableDays = displayedDay
+                    }
                 }
+                datePickerDialog.minDate = calendar
                 datePickerDialog.show(fragmentManager,"")
 
             }
@@ -236,6 +259,48 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         btLanjut.isEnabled = true
 
         tvSelectedDate.text = selected
+
+        tvpilihjadwal.visibility = VISIBLE
+        spJadwal.visibility = VISIBLE
+        var listJadwal : ArrayList<JadwalModel>
+
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val callJadwal = apiInterface.getJadwalByTgl(selectedJadwal, selectedIdDokter)
+        callJadwal.clone().enqueue( object : Callback<JadwalResponse>{
+            override fun onFailure(call: Call<JadwalResponse>, t: Throwable) {
+                Toast.makeText(this@BuatJanjiActivity, "Gagal ambil item", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<JadwalResponse>, response: Response<JadwalResponse>) {
+                listJadwal = response.body()!!.data
+                var jammulai  = arrayListOf<String>()
+                var jamselesai = arrayListOf<String>()
+                var idJadwal = arrayListOf<String>()
+                try {
+                    for(i in listJadwal.indices){
+                        jammulai.add(listJadwal[i].jamMulai!!+" ~ "+listJadwal[i].jamSelesai)
+//                        jamselesai.add(listJadwal[i].jamSelesai!!)
+                        idJadwal.add(listJadwal[i].idJadwal!!)
+                    }
+                    val spinnerAdapter = ArrayAdapter(this@BuatJanjiActivity, android.R.layout.simple_spinner_dropdown_item, jammulai)
+                    spJadwal.adapter = spinnerAdapter
+                    spJadwal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                        }
+
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            jamString = spJadwal.selectedItem.toString()
+                            selectedIdJadwal = idJadwal[position]
+                            Log.d("idJadwal", selectedIdJadwal)
+                        }
+
+                    }
+                }catch (e:Exception){}
+            }
+
+        })
+
     }
 }
 

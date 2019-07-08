@@ -13,13 +13,6 @@
             android:layout_above="@id/bottomLayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
-        <ProgressBar
-                android:id="@+id/pbhome"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_above="@+id/bottomLayout"
-                android:layout_marginBottom="215dp" android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"/>
     </FrameLayout>
     <LinearLayout
             android:id="@+id/bottomLayout"

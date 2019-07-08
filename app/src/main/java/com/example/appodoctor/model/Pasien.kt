@@ -10,5 +10,7 @@ data class Pasien (
     @SerializedName("alamat_pasien")
     val alamatPasien : String? = null,
     @SerializedName("norm_pasien")
-    val normPasien : String? = null
+    val normPasien : String? = null,
+    @SerializedName("token_notif")
+    var tokenPasien : String? = null
 )

@@ -28,24 +28,24 @@ class RvManageJadwalAdapter (private val context: Context, private val listJadwa
     }
 
     override fun onBindViewHolder(holder: ManageJadwalViewHolder, i: Int) {
-        holder.bind(listJadwal[i], context,jadwalViewRv)
+        holder.bind(listJadwal[i], context,jadwalViewRv, listJadwal[i].idJadwal.toString())
     }
 
     class ManageJadwalViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
         private var lj : JadwalModel? = null
-        fun bind(lj : JadwalModel, con : Context, jadwalView : JadwalView){
+        fun bind(lj : JadwalModel, con : Context, jadwalView : JadwalView, idJadwal : String){
             var deleteJadPres = JadwalPresenter(con,jadwalView)
             this.lj = lj
             with(itemView){
                 with(lj){
-                     id_Jadwal = idJadwal.toString()
+//                     id_Jadwal = idJadwal.toString()
                     tvDate.text = tgl
                     tvJamMulai.text = jamMulai
                     tvJamSelesai.text = jamSelesai
                 }
                 btHapus.setOnClickListener {
-                    deleteJadPres.deleteJadwalItem(id_Jadwal)
+                    deleteJadPres.deleteJadwalItem(idJadwal)
                 }
             }
         }

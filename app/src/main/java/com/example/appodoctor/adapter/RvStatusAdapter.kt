@@ -33,6 +33,7 @@ class RvStatusAdapter (private val context: Context, private val listStatus : Ar
                     tvNamaPoli.text = namaPoli
                     tvNamaDokter.text = namaDokter
                     tvTanggal.text = tgl
+                    tvJam.text = jamMulai+" ~ "+jamSelesai
                     tvStatus.text = status
                     if(ls.keterangan==""){
                         tvKeterangan.text = "   -"

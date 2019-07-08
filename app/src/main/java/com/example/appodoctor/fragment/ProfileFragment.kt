@@ -22,6 +22,7 @@ import com.example.appodoctor.HomeActivity
 import com.example.appodoctor.MainActivity
 
 import com.example.appodoctor.R
+import com.example.appodoctor.model.DokterModel
 import com.example.appodoctor.model.Pasien
 import com.example.appodoctor.presenter.ProfilPresenter
 import com.example.appodoctor.view.ProfilView
@@ -104,6 +105,10 @@ class ProfileFragment : Fragment(), ProfilView {
 
     override fun hideLoading() {
         pbProfil.visibility = INVISIBLE
+    }
+
+    override fun showProfilDokter(profilDokter: ArrayList<DokterModel>) {
+
     }
 
     override fun showProfilData(profilData: ArrayList<Pasien>) {

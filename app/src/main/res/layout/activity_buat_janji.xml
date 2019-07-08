@@ -11,21 +11,21 @@
 
     <ProgressBar
             android:id="@+id/pbJanji"
-            android:layout_marginTop="250dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints"
+            app:layout_constraintBottom_toBottomOf="@+id/layoutBuatJanji" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/layoutBuatJanji"/>
     <TextView
             android:id="@+id/tvDataNull"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:gravity="center_horizontal"
-            android:text="DATA TIDAK ADA"
+            android:text="Data tidak ada"
             android:textSize="20sp"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints"
+            app:layout_constraintBottom_toBottomOf="@+id/layoutBuatJanji" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/layoutBuatJanji"/>
     <LinearLayout
             android:id="@+id/layoutBuatJanji"
             android:layout_width="match_parent"
@@ -84,6 +84,21 @@
                 android:textSize="18sp"
                 android:textColor="#000"
                 tools:ignore="MissingConstraints"/>
+        <TextView
+                android:id="@+id/tvpilihjadwal"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih Waktu :"
+                android:textSize="18sp"
+                android:textColor="#000"
+        />
+        <Spinner
+                android:id="@+id/spJadwal"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        </Spinner>
         <Button
                 android:layout_marginTop="20dp"
                 android:id="@+id/btLanjut"

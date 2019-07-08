@@ -11,6 +11,9 @@ import kotlinx.android.synthetic.main.activity_home.*
 class HomeActivity : AppCompatActivity() {
 
     lateinit var pref : AppPreferences
+//    companion object{
+//        var GET_TOKEN  = "generated"
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,19 +21,18 @@ class HomeActivity : AppCompatActivity() {
         pref = AppPreferences(this)
         pref.setPreferences()
 
+
         bottomNavigation.isClickable=false
 
         bottomNavigation.setOnNavigationItemSelectedListener { item->
             when(item.itemId){
                 R.id.home ->{
-                    showLoading()
                     loadHomeFragment(savedInstanceState)
-                    hideLoading()
+                    supportActionBar?.title="Beranda"
                 }
                 R.id.profile ->{
-                    showLoading()
                     loadProfileFragment(savedInstanceState)
-                    hideLoading()
+                    supportActionBar?.title="Profil"
                 }
             }
             true
@@ -38,13 +40,6 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigation.selectedItemId = R.id.home
     }
 
-    private fun showLoading(){
-        pbhome.visibility = VISIBLE
-    }
-
-    private fun hideLoading(){
-        pbhome.visibility = INVISIBLE
-    }
 
     private fun loadHomeFragment(savedInstanceState: Bundle?){
         if(savedInstanceState == null){

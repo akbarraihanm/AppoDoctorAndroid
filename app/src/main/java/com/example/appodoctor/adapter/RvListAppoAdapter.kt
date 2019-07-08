@@ -1,16 +1,34 @@
 package com.example.appodoctor.adapter
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.appodoctor.R
 import com.example.appodoctor.activity.AppoPasienActivity
+import com.example.appodoctor.activity.ListAppoActivity
 import com.example.appodoctor.model.Appointment
+import com.example.appodoctor.model.PutPwResponse
+import com.example.appodoctor.service.ApiClient
+import com.example.appodoctor.service.ApiInterface
 import kotlinx.android.synthetic.main.rvlistappo_doctor.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RvListAppoAdapter (private val context: Context, private val listAppo : ArrayList<Appointment>)
     : RecyclerView.Adapter<RvListAppoAdapter.ListAppoViewHolder>(){
@@ -30,20 +48,30 @@ class RvListAppoAdapter (private val context: Context, private val listAppo : Ar
 
     class ListAppoViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
         private var la : Appointment? = null
+        @SuppressLint("NewApi")
         fun bind(la : Appointment, con : Context, id : String){
             this.la = la
             with(itemView){
                 with(la){
                     tvNamaPasien.text = namaPasien
                     tvTanggal.text = tgl
+                    tvStatus.text = status
+                }
+                if(la.status == "Diterima"){
+                    cvListAppo.setCardBackgroundColor(itemView.resources.getColor(R.color.colorPrimary))
+                }
+                if(la.status == "Dibatalkan"){
+                    cvListAppo.setCardBackgroundColor(itemView.resources.getColor(R.color.colorAccent))
                 }
             }
             itemView.cvListAppo.setOnClickListener {
                 val i = Intent(con, AppoPasienActivity::class.java)
                 i.putExtra(AppoPasienActivity.id_appo, id)
                 con.startActivity(i)
+                (con as ListAppoActivity).finish()
             }
         }
+
     }
 
 }

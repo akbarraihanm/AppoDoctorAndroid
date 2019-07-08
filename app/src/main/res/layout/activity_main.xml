@@ -23,8 +23,9 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AppoDoctor RSWS"
+                    android:text="Buat Janji Dengan Dokter\nRumah Sakit Wiyung Sejahtera"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:textSize="17sp"
                     android:textColor="#000"
                     android:layout_marginBottom="30dp"

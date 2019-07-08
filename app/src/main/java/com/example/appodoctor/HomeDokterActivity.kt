@@ -1,11 +1,9 @@
 package com.example.appodoctor
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import com.example.appodoctor.fragment.HomeDocter
 import com.example.appodoctor.fragment.ProfileDokter
 import kotlinx.android.synthetic.main.activity_home_dokter.*
@@ -13,6 +11,9 @@ import kotlinx.android.synthetic.main.activity_home_dokter.*
 class HomeDokterActivity : AppCompatActivity() {
 
     lateinit var pref : AppPreferences
+//    companion object{
+//        var docToken = "token"
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +28,11 @@ class HomeDokterActivity : AppCompatActivity() {
             when(item.itemId){
                 R.id.home ->{
                     loadHomeDoctorFragment(savedInstanceState)
-                    hideLoading()
+                    supportActionBar?.title = "Beranda"
                 }
                 R.id.profile->{
                     loadProfileDokterFragment(savedInstanceState)
-                    hideLoading()
+                    supportActionBar?.title = "Profil"
                 }
             }
             true
@@ -57,11 +58,4 @@ class HomeDokterActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(){
-        pbhome.visibility = VISIBLE
-    }
-
-    private fun hideLoading(){
-        pbhome.visibility = INVISIBLE
-    }
 }

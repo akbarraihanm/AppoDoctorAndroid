@@ -10,58 +10,145 @@
         tools:context=".activity.ListAppoActivity">
     <ProgressBar
             android:id="@+id/pbLoadAppo"
-            android:layout_marginTop="250dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout"/>
     <TextView
             android:id="@+id/tvIfNull"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="260dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:textSize="20sp"
             android:gravity="center"
             tools:text="Data tidak ada"
-    />
-    <LinearLayout
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout"/>
+    <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nama Dokter"
-        />
-        <TextView
-                android:id="@+id/tvDokName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="dr. Nama Dokter"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:maxLength="20"
-        />
-
-    </LinearLayout>
-    <LinearLayout
-            android:id="@+id/linearListAppo"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:layout_margin="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvlistAppo"
-                android:layout_marginTop="30dp"
+            tools:ignore="MissingConstraints"
+            android:id="@+id/swipeRefreshLayout">
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/rvlistappo_doctor">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints" android:id="@+id/linearLayout2">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Dokter"
+            />
+            <TextView
+                    android:id="@+id/tvDokName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="dr. Nama Dokter"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:maxLength="20"
+            />
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="Tampil berdasarkan"
+                    android:textColor="#000"
+                    android:textSize="17sp"
+            />
+            <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <RadioGroup
+                        android:id="@+id/rgRadio"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <RadioButton
+                            android:id="@+id/rbJadwal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="Jadwal"
+                            android:textSize="17sp"
+                    />
+                    <RadioButton
+                            android:id="@+id/rbStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="Status"
+                            android:textSize="17sp"/>
+                </RadioGroup>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <Button
+                            android:id="@+id/btTampil"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tampilkan"
+                            android:textColor="#fff"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:layout_weight="2"
+                    />
+                    <Button
+                            android:id="@+id/btBatal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tutup"
+                            android:textColor="#fff"
+                            android:backgroundTint="@color/colorAccent"
+                            android:layout_weight="2"
+                    />
 
-        </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/tvSelectDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-Pilih Jadwal-"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_gravity="center"
+            />
+            <Spinner
+                    android:id="@+id/spJam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </Spinner>
+            <Spinner
+                    android:id="@+id/spStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            </Spinner>
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvlistAppo"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/rvlistappo_doctor">
 
-    </LinearLayout>
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--<LinearLayout-->
+            <!--android:id="@+id/linearListAppo"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_margin="20dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+
+    <!--</LinearLayout>-->
 
 </android.support.constraint.ConstraintLayout>

@@ -3,7 +3,7 @@ package com.example.appodoctor.model
 import com.google.gson.annotations.SerializedName
 
 data class PostAppo (
-    @field:SerializedName("tanggal")
+    @field:SerializedName("jadwal_id")
     val tappo : String? = null,
     @field:SerializedName("pasien_id")
     val pid : String? = null,
