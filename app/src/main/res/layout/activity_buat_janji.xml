@@ -69,8 +69,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pilih Tanggal"
+                android:backgroundTint="@color/colorPrimary"
                 android:textAllCaps="true"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:layout_gravity="center"
                 tools:ignore="MissingConstraints"/>
         <TextView
@@ -105,6 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lanjut"
+                android:textColor="#fff"
+                android:backgroundTint="@color/colorPrimary"
         />
     </LinearLayout>
 

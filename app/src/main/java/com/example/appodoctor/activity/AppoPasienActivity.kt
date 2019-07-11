@@ -93,7 +93,14 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
         btTerima.setOnClickListener {
             val statusAppo = "Diterima"
             if(etKeterangan.text.isEmpty()){
-                etKeterangan.error = "Wajib diisi"
+//                etKeterangan.error = "Wajib diisi"
+                val keteranganAppo = "-"
+                val judul = "Notifikasi"
+                val pesan = "Update status permintaan janji : "+statusAppo
+                konfirmasiPasien.putAppoPasien(id_appo, statusAppo, keteranganAppo)
+                Handler().postDelayed({
+                    pushNotification(TOKEN_PAS, judul, pesan)
+                }, 2000)
             }
             else {
                 val keteranganAppo = etKeterangan.text.toString()

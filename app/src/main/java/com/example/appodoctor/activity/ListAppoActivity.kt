@@ -39,6 +39,7 @@ class ListAppoActivity : AppCompatActivity(), ListAppoView, DatePickerDialog.OnD
 
     lateinit var jamString : String
     lateinit var tglDipilih : String
+    lateinit var statDipilih : String
 
     companion object{
         var selectedIdJadwal = "kok"
@@ -81,9 +82,12 @@ class ListAppoActivity : AppCompatActivity(), ListAppoView, DatePickerDialog.OnD
                 }
             }
             if(rbId == R.id.rbStatus){
+                swipeRefreshLayout.isRefreshing = false
+                swipeRefreshLayout.isEnabled = false
                 tvSelectDate.visibility = GONE
                 spJam.visibility = GONE
                 spStatus.visibility = VISIBLE
+                viewByStatus()
             }
         }
         btBatal.setOnClickListener {
@@ -94,6 +98,7 @@ class ListAppoActivity : AppCompatActivity(), ListAppoView, DatePickerDialog.OnD
             spJam.visibility = GONE
             btTampil.visibility = GONE
             btBatal.visibility = GONE
+            tvIfNull.text = ""
             tvSelectDate.text = "-Pilih Jadwal-"
             showLoading()
             rvlistAppo.adapter = null
@@ -161,6 +166,47 @@ class ListAppoActivity : AppCompatActivity(), ListAppoView, DatePickerDialog.OnD
         })
     }
 
+    private fun viewByStatus(){
+        var statusAppo = arrayListOf<String>("Menunggu", "Diterima", "Dibatalkan")
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, statusAppo)
+        spStatus.adapter = spinnerAdapter
+        spStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                statDipilih = spStatus.selectedItem.toString()
+                rvlistAppo.adapter = null
+                showLoading()
+                tvIfNull.text = ""
+                val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+                val call = apiInterface.getAppoByStatus(statDipilih, pref.getUserId())
+                call.enqueue(object : Callback<AppoResponse>{
+                    override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
+                        Toast.makeText(this@ListAppoActivity, "Koneksi gagal",Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onResponse(call: Call<AppoResponse>, response: Response<AppoResponse>) {
+                        var listAppo = response.body()!!.data
+                        try {
+                            if(listAppo.isEmpty()){
+                                tvIfNull.text = "Data tidak ada"
+                                hideLoading()
+                            }
+                            else{
+                                rvlistAppo.adapter = RvListAppoAdapter(this@ListAppoActivity, listAppo)
+                                hideLoading()
+                            }
+                        }catch (e:Exception){}
+                    }
+
+                })
+            }
+
+        }
+    }
+
     private fun dateToCalendar(date: Date) : Calendar{
         val calendar = Calendar.getInstance()
         calendar.time = date
@@ -200,6 +246,7 @@ class ListAppoActivity : AppCompatActivity(), ListAppoView, DatePickerDialog.OnD
                             jamString = spJam.selectedItem.toString()
                             selectedIdJadwal = idjam[position]
                             rvlistAppo.adapter = null
+                            tvIfNull.text = ""
                             showLoading()
                             val apiJadwal = ApiClient.getClient().create(ApiInterface::class.java)
                             val call = apiJadwal.getAppoByJadwalId(selectedIdJadwal)

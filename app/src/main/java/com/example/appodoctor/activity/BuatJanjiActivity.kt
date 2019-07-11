@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
+import com.example.appodoctor.model.AppoResponse
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.JadwalResponse
 import com.example.appodoctor.presenter.BuatJanjiPresenter
@@ -26,7 +27,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, BuatJanjiView {
 
@@ -57,6 +57,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
         var selectedIdJadwal = "idjadwalasda"
 
+        var count = 0
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +83,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         buatJanjiPresenter.getPoliItem()
 
         if(selectedJadwal.isEmpty()){
-            btLanjut.alpha = .5f
+            btLanjut.alpha = .4f
             btLanjut.isEnabled = false
         }
 
@@ -142,7 +144,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         hideLoading()
         layoutBuatJanji.visibility = VISIBLE
         if(selectedJadwal.isEmpty()){
-            btLanjut.alpha = .5f
+            btLanjut.alpha = .4f
             btLanjut.isEnabled = false
         }
 //        visibleItems()
@@ -180,12 +182,12 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
         if(listJadwal.isEmpty()){
             btSelectDate.text = "Jadwal Tidak Ada"
-            btSelectDate.alpha = .5f
+            btSelectDate.alpha = .4f
             btSelectDate.isEnabled = false
             tvSelectedDate.text = ""
             btSelectDate.visibility = VISIBLE
 
-            btLanjut.alpha = .5f
+            btLanjut.alpha = .4f
             btLanjut.isEnabled = false
         }
         else{
@@ -255,9 +257,6 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         var selected = ""+year+"-"+(monthOfYear+1)+"-"+dayOfMonth
         selectedJadwal = selected
 
-        btLanjut.alpha = 1f
-        btLanjut.isEnabled = true
-
         tvSelectedDate.text = selected
 
         tvpilihjadwal.visibility = VISIBLE
@@ -273,9 +272,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
             override fun onResponse(call: Call<JadwalResponse>, response: Response<JadwalResponse>) {
                 listJadwal = response.body()!!.data
-                var jammulai  = arrayListOf<String>()
-                var jamselesai = arrayListOf<String>()
-                var idJadwal = arrayListOf<String>()
+                val jammulai  = arrayListOf<String>()
+                val idJadwal = arrayListOf<String>()
                 try {
                     for(i in listJadwal.indices){
                         jammulai.add(listJadwal[i].jamMulai!!+" ~ "+listJadwal[i].jamSelesai)
@@ -292,6 +290,14 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                             jamString = spJadwal.selectedItem.toString()
                             selectedIdJadwal = idJadwal[position]
+                            val formatter = SimpleDateFormat("HH:mm")
+                            val format1 = formatter.parse(listJadwal[position].jamMulai)
+                            val format2 = formatter.parse(listJadwal[position].jamSelesai)
+//                            val formatted1 = formatter.format(format1)
+//                            val formatted2 = formatter.format(format2)
+                            appoByJadwalId(selectedIdJadwal)
+                            setDifferenTime(format1, format2)
+
                             Log.d("idJadwal", selectedIdJadwal)
                         }
 
@@ -301,6 +307,109 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
         })
 
+    }
+
+    private fun setDifferenTime(time1 : Date, time2 : Date){
+        var different = time2.time - time1.time
+
+        val miliSecond = 1000
+        val miliMinutes = miliSecond * 60
+        val miliHours = miliMinutes * 60
+
+        val elapsedHours = different / miliHours
+        different = different % miliHours
+
+//        val elapsedMinutes = different / miliMinutes
+//        different = different % miliMinutes
+//
+//        val elapsedSeconds = different / miliSecond
+
+        val hasil = ""+elapsedHours
+        Log.d("hasilkurang", hasil)
+//        +":"+elapsedMinutes+":"+elapsedSeconds
+
+        val batas  = 6
+        var j = 1
+
+        for(i in 0..24){
+            if(hasil == j.toString()){
+                if(count < (batas*j)){
+                    btLanjut.alpha = 1f
+                    btLanjut.isEnabled = true
+                }
+                else{
+                    btLanjut.alpha = .4f
+                    btLanjut.isEnabled = false
+                    Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
+                }
+            }
+            j++
+        }
+//        if(hasil == "1"){
+//            if(count < batas){
+//                btLanjut.alpha = 1f
+//                btLanjut.isEnabled = true
+//            }
+//            else{
+//                btLanjut.alpha = .4f
+//                btLanjut.isEnabled = false
+//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        else if(hasil == "2"){
+//            if(count <= (batas*2)){
+//                btLanjut.alpha = 1f
+//                btLanjut.isEnabled = true
+//            }
+//            else{
+//                btLanjut.alpha = .4f
+//                btLanjut.isEnabled = false
+//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        else if(hasil == "3"){
+//            if(count <= (batas*3)){
+//                btLanjut.alpha = 1f
+//                btLanjut.isEnabled = true
+//            }
+//            else{
+//                btLanjut.alpha = .4f
+//                btLanjut.isEnabled = false
+//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        else if(hasil == "4"){
+//            if(count <= (batas*4)){
+//                btLanjut.alpha = 1f
+//                btLanjut.isEnabled = true
+//            }
+//            else{
+//                btLanjut.alpha = .4f
+//                btLanjut.isEnabled = false
+//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+    }
+
+    private fun appoByJadwalId(jadwalId : String){
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val call = apiInterface.getAppoByJadwalId(jadwalId)
+        call.enqueue(object : Callback<AppoResponse>{
+            override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
+                Toast.makeText(this@BuatJanjiActivity, "Koneksi gagal", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<AppoResponse>, response: Response<AppoResponse>) {
+                val listAppo = response.body()!!.data
+                count = 0
+                try {
+                    for(i in listAppo.indices){
+                        count++
+                    }
+                }catch (e:Exception){}
+            }
+
+        })
     }
 }
 

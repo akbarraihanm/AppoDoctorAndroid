@@ -43,7 +43,8 @@ interface ApiInterface {
     fun getAppoByJadwalId(@Query("jadwal_id") jadId : String?) : Call<AppoResponse>
 
     @GET("appo/status")
-    fun getAppoByStatus(@Query("status_appo") statAppo : String?) : Call<AppoResponse>
+    fun getAppoByStatus(@Query("status_appo") statAppo : String?,
+                        @Query("dokter_id") idDokt : String?) : Call<AppoResponse>
 
     @POST("appo")
     @FormUrlEncoded

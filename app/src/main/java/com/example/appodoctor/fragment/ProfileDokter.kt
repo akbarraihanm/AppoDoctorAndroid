@@ -9,17 +9,23 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.LoginDokterActivity
 
 import com.example.appodoctor.R
 import com.example.appodoctor.model.DokterModel
 import com.example.appodoctor.model.Pasien
+import com.example.appodoctor.model.PutPwResponse
 import com.example.appodoctor.presenter.ProfilPresenter
+import com.example.appodoctor.service.ApiClient
+import com.example.appodoctor.service.ApiInterface
 import com.example.appodoctor.view.ProfilView
 import kotlinx.android.synthetic.main.fragment_profile_dokter.*
 import kotlinx.android.synthetic.main.fragment_profile_dokter.view.*
-import kotlinx.android.synthetic.main.fragment_profile_dokter.view.pbProfil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +40,9 @@ class ProfileDokter : Fragment(), ProfilView {
 
     lateinit var pref : AppPreferences
     lateinit var profilPresenter : ProfilPresenter
+    companion object{
+        var notelpDokter = "asd"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,14 +60,36 @@ class ProfileDokter : Fragment(), ProfilView {
 
         view.btKeluar.setOnClickListener {
 
+            updateToken(notelpDokter)
             pref.setUserId("")
-
             val i = Intent(context!!, LoginDokterActivity::class.java)
+            notelpDokter = ""
             startActivity(i)
             activity!!.finish()
         }
 
         return view
+    }
+
+    private fun updateToken(tlp: String?) {
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val callUpToken = apiInterface.putDokterToken(tlp, "kosong")
+
+        callUpToken.enqueue(object : Callback<PutPwResponse> {
+            override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
+//                Toast.makeText(context, "Gagal update token\n"+t, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
+                var statusPut = response.body()
+                try {
+                    if(statusPut!!.statusPut == "success"){
+//                        Toast.makeText(context, "Token berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    }
+                }catch (e:Exception){}
+            }
+
+        })
     }
 
     override fun showLoading() {
@@ -74,6 +105,7 @@ class ProfileDokter : Fragment(), ProfilView {
     }
 
     override fun showProfilDokter(profilDokter: ArrayList<DokterModel>) {
+        notelpDokter = profilDokter[0].noTelp!!
         layoutProfil.visibility = VISIBLE
         tvNamaDokter.text = profilDokter[0].namaDokter
         tvNoTelp.text = profilDokter[0].noTelp

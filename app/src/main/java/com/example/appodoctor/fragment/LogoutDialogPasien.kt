@@ -9,7 +9,13 @@ import android.support.v4.app.DialogFragment
 import android.widget.Toast
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.MainActivity
+import com.example.appodoctor.model.PutPwResponse
 import com.example.appodoctor.presenter.ProfilPresenter
+import com.example.appodoctor.service.ApiClient
+import com.example.appodoctor.service.ApiInterface
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LogoutDialogPasien : DialogFragment(){
     lateinit var pref : AppPreferences
@@ -29,9 +35,12 @@ class LogoutDialogPasien : DialogFragment(){
                 .setPositiveButton("Keluar",
                     DialogInterface.OnClickListener { dialog, id ->
                         pref.setUserId("")
+                        var normPasien = ProfileFragment.norm
+                        updateToken(normPasien)
                         val i = Intent(context!!, MainActivity::class.java)
                         startActivity(i)
                         activity!!.finish()
+                        ProfileFragment.norm = ""
                         Toast.makeText(context,"Berhasil keluar", Toast.LENGTH_SHORT).show()
                     })
                 .setNegativeButton("Batal",
@@ -40,6 +49,27 @@ class LogoutDialogPasien : DialogFragment(){
                     })
             builder.create()
         }!!
+    }
+
+    private fun updateToken(normPasien: String) {
+        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+        val callUpToken = apiInterface.putPasienToken(normPasien, "kosong")
+
+        callUpToken.enqueue(object : Callback<PutPwResponse> {
+            override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
+//                Toast.makeText(context, "Gagal update token\n"+t, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
+                var statusPut = response.body()
+                try {
+                    if(statusPut!!.statusPut == "success"){
+//                        Toast.makeText(context, "Token berhasil ditambah", Toast.LENGTH_SHORT).show()
+                    }
+                }catch (e:Exception){}
+            }
+
+        })
     }
 
     fun newInstance(title : String) : LogoutDialogPasien{

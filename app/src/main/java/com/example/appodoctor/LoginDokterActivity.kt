@@ -110,14 +110,14 @@ class LoginDokterActivity : AppCompatActivity(), LoginView {
 
         callUpToken.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
-                Toast.makeText(this@LoginDokterActivity, "Gagal update token\n"+t, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@LoginDokterActivity, "Gagal update token\n"+t, Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
                 var statusPut = response.body()
                 try {
                     if(statusPut!!.statusPut == "success"){
-                        Toast.makeText(this@LoginDokterActivity, "Token berhasil ditambah", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@LoginDokterActivity, "Token berhasil ditambah", Toast.LENGTH_SHORT).show()
                     }
                 }catch (e:Exception){}
             }
