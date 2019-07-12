@@ -17,6 +17,8 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:replace="android:appComponentFactory">
+        <activity android:name=".activity.ListAppoByJadwalActivity">
+        </activity>
         <activity android:name=".activity.TestNotifDoctor">
         </activity>
         <activity android:name=".activity.TestNotificationActivity">
@@ -56,10 +58,9 @@
 
         <service android:name=".activity.MyFirebaseMessaginService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-        
     </application>
 
 </manifest>

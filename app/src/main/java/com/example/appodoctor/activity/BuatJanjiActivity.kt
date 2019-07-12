@@ -345,50 +345,6 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
             }
             j++
         }
-//        if(hasil == "1"){
-//            if(count < batas){
-//                btLanjut.alpha = 1f
-//                btLanjut.isEnabled = true
-//            }
-//            else{
-//                btLanjut.alpha = .4f
-//                btLanjut.isEnabled = false
-//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//        else if(hasil == "2"){
-//            if(count <= (batas*2)){
-//                btLanjut.alpha = 1f
-//                btLanjut.isEnabled = true
-//            }
-//            else{
-//                btLanjut.alpha = .4f
-//                btLanjut.isEnabled = false
-//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//        else if(hasil == "3"){
-//            if(count <= (batas*3)){
-//                btLanjut.alpha = 1f
-//                btLanjut.isEnabled = true
-//            }
-//            else{
-//                btLanjut.alpha = .4f
-//                btLanjut.isEnabled = false
-//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//        else if(hasil == "4"){
-//            if(count <= (batas*4)){
-//                btLanjut.alpha = 1f
-//                btLanjut.isEnabled = true
-//            }
-//            else{
-//                btLanjut.alpha = .4f
-//                btLanjut.isEnabled = false
-//                Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
-//            }
-//        }
     }
 
     private fun appoByJadwalId(jadwalId : String){

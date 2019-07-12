@@ -7,8 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.Toast
 import com.example.appodoctor.HomeDokterActivity
 import com.example.appodoctor.R
@@ -45,8 +44,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_appo_pasien)
         id_appo = intent.getStringExtra(id_appo)
-
-        val context : Context = this
+        Log.d("idappo", id_appo)
 
         supportActionBar?.title = "Detail Janji"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -71,20 +69,20 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
         tvJam.text = objItem[0].jamMulai+" ~ "+objItem[0].jamSelesai
         tvStatus.text = objItem[0].status
         if(objItem[0].status == "Menunggu"){
-            btBatal.visibility = INVISIBLE
-            tvKeterangan.visibility = INVISIBLE
+            btBatal.visibility = GONE
+            tvKeterangan.visibility = GONE
         }
         else if(objItem[0].status == "Diterima"){
-            tvKeterangan.visibility = INVISIBLE
-            btTerima.visibility = INVISIBLE
+            tvKeterangan.visibility = GONE
+            btTerima.visibility = GONE
             btBatal.visibility = VISIBLE
 
             etKeterangan.hint = "Alasan dibatalkan"
         }
         else if(objItem[0].status == "Dibatalkan"){
-            btTerima.visibility = INVISIBLE
-            btBatal.visibility = INVISIBLE
-            etKeterangan.visibility = INVISIBLE
+            btTerima.visibility = GONE
+            btBatal.visibility = GONE
+            etKeterangan.visibility = GONE
             tvKeterangan.visibility = VISIBLE
 
             tvKeterangan.text = objItem[0].keterangan
@@ -101,6 +99,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
                 Handler().postDelayed({
                     pushNotification(TOKEN_PAS, judul, pesan)
                 }, 2000)
+
             }
             else {
                 val keteranganAppo = etKeterangan.text.toString()
@@ -110,6 +109,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
                 Handler().postDelayed({
                     pushNotification(TOKEN_PAS, judul, pesan)
                 }, 2000)
+
             }
         }
 
@@ -126,6 +126,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
                 Handler().postDelayed({
                     pushNotification(TOKEN_PAS, judul, pesan)
                 }, 2000)
+
             }
         }
 
@@ -173,9 +174,10 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
     }
 
     override fun whenPutData() {
-        val i = Intent(this, ListAppoActivity::class.java)
-        startActivity(i)
-        finish()
+//        val i = Intent(this, ListAppoActivity::class.java)
+//        startActivity(i)
+//        finish()
+        statusPresenter.getStatusByIdAppo(id_appo)
     }
 
     override fun showLoading() {
