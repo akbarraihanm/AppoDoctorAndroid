@@ -1,4 +1,4 @@
-package com.example.appodoctor.view
+package com.example.appodoctor.tambahjadwal
 
 interface AddJadwalView {
     fun whenPostJadwal()

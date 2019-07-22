@@ -1,4 +1,4 @@
-package com.example.appodoctor.presenter
+package com.example.appodoctor.jadwaldokter
 
 import android.content.Context
 import android.widget.Toast
@@ -7,14 +7,14 @@ import com.example.appodoctor.model.JadwalResponse
 import com.example.appodoctor.model.PutPwResponse
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-//import com.example.appodoctor.view.AddJadwalView
-import com.example.appodoctor.view.JadwalView
+//import com.example.appodoctor.tambahjadwal.AddJadwalView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class JadwalPresenter(private val context: Context,
-                      private val jadView : JadwalView){
+                      private val jadView : JadwalView
+){
     fun getJadwalItem(id : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
         val call = apiInterface.getJadwalByDokterId(id)

@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.appodoctor.R
 import com.example.appodoctor.activity.BuatJanjiActivity
-import com.example.appodoctor.activity.CekStatusActivity
+import com.example.appodoctor.cekstatus.CekStatusActivity
 import com.example.appodoctor.activity.JadwalActivity
 import com.example.appodoctor.model.ListMenuModel
 import kotlinx.android.synthetic.main.listview_item.view.*

@@ -64,7 +64,8 @@ class JadwalActivity : AppCompatActivity(), DokterView {
 
 //                    showLoading()
 
-                    val spinnerPoliAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, savedPoliName)
+                    val spinnerPoliAdapter = ArrayAdapter(this@JadwalActivity, R.layout.spinner_item, savedPoliName)
+                    spinnerPoliAdapter.setDropDownViewResource(R.layout.spinner_item)
                     spinnerPoli.adapter = spinnerPoliAdapter
                     spinnerPoli.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {

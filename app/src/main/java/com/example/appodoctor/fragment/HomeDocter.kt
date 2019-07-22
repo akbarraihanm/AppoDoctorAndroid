@@ -8,17 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import com.example.appodoctor.AppPreferences
-import com.example.appodoctor.HomeDokterActivity
-import com.example.appodoctor.LoginDokterActivity
 
 import com.example.appodoctor.R
-import com.example.appodoctor.activity.ListAppoActivity
+import com.example.appodoctor.listjanji.ListAppoActivity
 import com.example.appodoctor.activity.ManageJadwalActivity
-import com.example.appodoctor.activity.TestNotifDoctor
-import kotlinx.android.synthetic.main.fragment_home_docter.*
 import kotlinx.android.synthetic.main.fragment_home_docter.view.*
 import kotlinx.android.synthetic.main.fragment_home_docter.view.btSini
 

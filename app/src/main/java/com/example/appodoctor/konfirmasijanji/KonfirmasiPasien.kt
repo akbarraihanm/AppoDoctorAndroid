@@ -1,20 +1,17 @@
-package com.example.appodoctor.presenter
+package com.example.appodoctor.konfirmasijanji
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
-import com.example.appodoctor.activity.AppoPasienActivity
-import com.example.appodoctor.activity.ListAppoActivity
 import com.example.appodoctor.model.PutPwResponse
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.KonfirPasienView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class KonfirmasiPasien (private val context: Context,
-                        private val konfirPasienView : KonfirPasienView){
+                        private val konfirPasienView : KonfirPasienView
+){
     fun putAppoPasien(idAppo : String, statusAppo : String, ketAppo : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
         val callPut = apiInterface.putStatusAppo(idAppo, statusAppo, ketAppo)

@@ -1,4 +1,4 @@
-package com.example.appodoctor.presenter
+package com.example.appodoctor.cekstatus
 
 import android.content.Context
 import android.widget.Toast
@@ -6,7 +6,6 @@ import com.example.appodoctor.model.AppoResponse
 import com.example.appodoctor.model.Appointment
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.StatusView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

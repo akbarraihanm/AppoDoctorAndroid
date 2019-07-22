@@ -1,13 +1,8 @@
 package com.example.appodoctor.adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,29 +10,20 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import com.example.appodoctor.R
-import com.example.appodoctor.activity.AppoPasienActivity
-import com.example.appodoctor.activity.ListAppoActivity
 import com.example.appodoctor.activity.ListAppoByJadwalActivity
 import com.example.appodoctor.model.AppoResponse
-import com.example.appodoctor.model.Appointment
 import com.example.appodoctor.model.JadwalModel
-import com.example.appodoctor.model.PutPwResponse
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import kotlinx.android.synthetic.main.activity_list_appo.*
 import kotlinx.android.synthetic.main.rvlistappo_doctor.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.coroutines.coroutineContext
 
 //Canceled Arraylist
 //private val listAppo : ArrayList<Appointment>
@@ -110,21 +96,22 @@ class RvListAppoAdapter (private val context: Context, private val listJadwal : 
                                             tvDibatalkan.text = "0"
                                         }
                                         else {
-                                            for (j in listAppo[i].status!!.indices) {
-                                                if (listAppo[j].status == "Menunggu") {
-                                                    countMenunggu++
-                                                }
-                                                tvMenunggu.text = countMenunggu.toString()
-                                                if (listAppo[j].status == "Diterima") {
-                                                    countDiterima++
-                                                }
-                                                tvDiterima.text = countDiterima.toString()
-                                                if (listAppo[j].status == "Dibatalkan") {
-                                                    countDibatalkan++
-                                                }
-                                                tvDibatalkan.text = countDibatalkan.toString()
-
+//                                            for (j in listAppo[i].status!!.indices) {
+//
+//
+//                                            }
+                                            if (listAppo[i].status == "Menunggu") {
+                                                countMenunggu++
                                             }
+                                            tvMenunggu.text = countMenunggu.toString()
+                                            if (listAppo[i].status == "Diterima") {
+                                                countDiterima++
+                                            }
+                                            tvDiterima.text = countDiterima.toString()
+                                            if (listAppo[i].status == "Dibatalkan") {
+                                                countDibatalkan++
+                                            }
+                                            tvDibatalkan.text = countDibatalkan.toString()
                                         }
                                     }
                                 }catch (e:Exception){}
@@ -138,24 +125,6 @@ class RvListAppoAdapter (private val context: Context, private val listJadwal : 
 
 //                    tvStatus.text = status
                 }
-//                if(la.status == "Diterima"){
-//                    cvListAppo.setCardBackgroundColor(resources.getColor(R.color.colorPrimary))
-////                    tvNamaPasien.setTextColor(resources.getColor(R.color.warnaPutih))
-//                    tvTanggal.setTextColor(resources.getColor(R.color.warnaPutih))
-////                    tvStatus.setTextColor(resources.getColor(R.color.warnaPutih))
-//                }
-//                else if(la.status == "Dibatalkan"){
-//                    cvListAppo.setCardBackgroundColor(resources.getColor(R.color.colorAccent))
-////                    tvNamaPasien.setTextColor(resources.getColor(R.color.warnaPutih))
-//                    tvTanggal.setTextColor(resources.getColor(R.color.warnaPutih))
-////                    tvStatus.setTextColor(resources.getColor(R.color.warnaPutih))
-//                }
-//                else if(la.status == "Menunggu"){
-//                    cvListAppo.setCardBackgroundColor(resources.getColor(R.color.warnaPutih))
-////                    tvNamaPasien.setTextColor(resources.getColor(R.color.warnaHitam))
-//                    tvTanggal.setTextColor(resources.getColor(R.color.warnaHitam))
-////                    tvStatus.setTextColor(resources.getColor(R.color.warnaHitam))
-//                }
             }
             itemView.cvListAppo.setOnClickListener {
                 val i = Intent(con, ListAppoByJadwalActivity::class.java)
@@ -166,13 +135,6 @@ class RvListAppoAdapter (private val context: Context, private val listJadwal : 
                 con.startActivity(i)
             }
         }
-
-//        private fun appoByJadwalId(idJad : String, context: Context){
-////            totalMenunggu = "0"
-////            totalDiterima = "1"
-////            totalDibatalkan = "2"
-//
-//        }
 
     }
 

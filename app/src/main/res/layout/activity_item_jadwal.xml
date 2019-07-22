@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="20dp"
-        tools:context=".activity.ItemJadwalActivity">
+        tools:context=".jadwaldokter.ItemJadwalActivity">
     <ProgressBar
             android:id="@+id/pbLoadJadwal"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context=".activity.ItemJadwalActivity" android:id="@+id/linearLayout4">
+            tools:context=".jadwaldokter.ItemJadwalActivity" android:id="@+id/linearLayout4">
         <TextView
                 android:id="@+id/tvNaDokWhenLoading"
                 android:layout_width="match_parent"

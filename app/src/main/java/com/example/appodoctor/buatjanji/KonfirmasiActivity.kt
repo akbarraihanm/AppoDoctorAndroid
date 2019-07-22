@@ -1,4 +1,4 @@
-package com.example.appodoctor.activity
+package com.example.appodoctor.buatjanji
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -8,16 +8,14 @@ import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import com.example.appodoctor.HomeActivity
 import com.example.appodoctor.R
+import com.example.appodoctor.activity.BuatJanjiActivity
 import com.example.appodoctor.model.DokterModel
 import com.example.appodoctor.model.DokterResponse
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.Pasien
-import com.example.appodoctor.presenter.KonfirmasiPresenter
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.KonfirmasiView
 import kotlinx.android.synthetic.main.activity_konfirmasi.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -54,7 +52,7 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
         supportActionBar?.title = "Cek Data"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        konfirmasiPresenter = KonfirmasiPresenter(this,this)
+        konfirmasiPresenter = KonfirmasiPresenter(this, this)
 
         poliName = intent.getStringExtra(poliName)
         dokterName = intent.getStringExtra(dokterName)
@@ -63,11 +61,14 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
         dokter_id = intent.getStringExtra(dokter_id)
         id_pasien = intent.getStringExtra(id_pasien)
 
-        tappo = tanggal_id
-        poid = poli_id
-        pid = id_pasien
+        tappo =
+            tanggal_id
+        poid =
+            poli_id
+        pid =
+            id_pasien
         Log.d("idpas", pid)
-        Log.d("poliid",poid)
+        Log.d("poliid", poid)
         doid = dokter_id
 
         konfirmasiPresenter.getPasienItem(id_pasien)
@@ -106,9 +107,13 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
         btBuatJanji.setOnClickListener {
             var judul = "Notifikasi"
             var body = "Ada Permintaan Janji Baru !"
-            konfirmasiPresenter.setKonfirmasi(tappo, pid, dokter_id, poli_id)
+            konfirmasiPresenter.setKonfirmasi(
+                tappo,
+                pid,
+                dokter_id,
+                poli_id
+            )
             pushNotification(TOKEN_DOC, judul, body)
-
         }
     }
 

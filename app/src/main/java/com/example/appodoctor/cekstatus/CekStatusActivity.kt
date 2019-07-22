@@ -1,18 +1,17 @@
-package com.example.appodoctor.activity
+package com.example.appodoctor.cekstatus
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvStatusAdapter
 import com.example.appodoctor.model.Appointment
-import com.example.appodoctor.presenter.StatusPresenter
-import com.example.appodoctor.view.StatusView
+import com.example.appodoctor.cekstatus.StatusPresenter
+import com.example.appodoctor.cekstatus.StatusView
 import kotlinx.android.synthetic.main.activity_cek_status.*
 
 class CekStatusActivity : AppCompatActivity(), StatusView {
@@ -35,7 +34,7 @@ class CekStatusActivity : AppCompatActivity(), StatusView {
 
         rvStatusAppo.layoutManager = LinearLayoutManager(this)
 
-        statusPresenter = StatusPresenter(this,this)
+        statusPresenter = StatusPresenter(this, this)
         statusPresenter.getStatusItem(pasId)
 
         supportActionBar?.title = "Cek Status"

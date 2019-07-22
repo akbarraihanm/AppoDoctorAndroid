@@ -79,6 +79,9 @@ interface ApiInterface {
     @PUT("pasienid")
     fun putPasienPassword(@Query("id") pasienId : String?,
                           @Query("password") pw : String?) : Call<PutPwResponse>
+    @PUT("dokterid")
+    fun putDokterPassword(@Query("id") dokId : String?,
+                          @Query("password") pw : String?) : Call<PutPwResponse>
     @PUT("pasien/token")
     fun putPasienToken(@Query("norm_pasien") normPas : String?,
                        @Query("token_notif") token : String?) : Call<PutPwResponse>

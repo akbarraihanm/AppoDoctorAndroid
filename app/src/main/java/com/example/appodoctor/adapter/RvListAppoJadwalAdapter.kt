@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.appodoctor.R
-import com.example.appodoctor.activity.AppoPasienActivity
+import com.example.appodoctor.konfirmasijanji.AppoPasienActivity
 import com.example.appodoctor.model.Appointment
 import kotlinx.android.synthetic.main.rvappojadwal_item.view.*
 

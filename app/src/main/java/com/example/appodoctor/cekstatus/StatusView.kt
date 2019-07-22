@@ -1,4 +1,4 @@
-package com.example.appodoctor.view
+package com.example.appodoctor.cekstatus
 
 import com.example.appodoctor.model.Appointment
 

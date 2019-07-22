@@ -1,4 +1,4 @@
-package com.example.appodoctor.view
+package com.example.appodoctor.konfirmasijanji
 
 interface KonfirPasienView {
     fun whenPutData()

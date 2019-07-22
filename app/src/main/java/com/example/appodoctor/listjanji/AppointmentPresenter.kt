@@ -1,20 +1,18 @@
-package com.example.appodoctor.presenter
+package com.example.appodoctor.listjanji
 
 import android.content.Context
 import android.widget.Toast
-import com.example.appodoctor.model.AppoResponse
-import com.example.appodoctor.model.Appointment
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.JadwalResponse
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.ListAppoView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AppointmentPresenter (private val context: Context,
-                            private val listAppoView: ListAppoView){
+                            private val listAppoView: ListAppoView
+){
 
 //    fun getItemListAppo(idDokter : String){
 //        var listAppo : ArrayList<Appointment>

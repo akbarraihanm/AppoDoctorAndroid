@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.appodoctor.R
 import com.example.appodoctor.model.JadwalModel
-import com.example.appodoctor.presenter.JadwalPresenter
-import com.example.appodoctor.view.JadwalView
+import com.example.appodoctor.jadwaldokter.JadwalPresenter
+import com.example.appodoctor.jadwaldokter.JadwalView
 import kotlinx.android.synthetic.main.rvmanage_jadwal.view.*
 
 class RvManageJadwalAdapter (private val context: Context, private val listJadwal : ArrayList<JadwalModel>, private val jadwalViewRv: JadwalView)
@@ -35,7 +35,7 @@ class RvManageJadwalAdapter (private val context: Context, private val listJadwa
 
         private var lj : JadwalModel? = null
         fun bind(lj : JadwalModel, con : Context, jadwalView : JadwalView, idJadwal : String){
-            var deleteJadPres = JadwalPresenter(con,jadwalView)
+            var deleteJadPres = JadwalPresenter(con, jadwalView)
             this.lj = lj
             with(itemView){
                 with(lj){

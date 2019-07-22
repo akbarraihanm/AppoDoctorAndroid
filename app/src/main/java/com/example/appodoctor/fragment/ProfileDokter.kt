@@ -4,6 +4,7 @@ package com.example.appodoctor.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -59,37 +60,25 @@ class ProfileDokter : Fragment(), ProfilView {
         profilPresenter.getProfilDokter(pref.getUserId())
 
         view.btKeluar.setOnClickListener {
-
-            updateToken(notelpDokter)
-            pref.setUserId("")
-            val i = Intent(context!!, LoginDokterActivity::class.java)
-            notelpDokter = ""
-            startActivity(i)
-            activity!!.finish()
+            showLogoutDialog()
+        }
+        view.btEditPw.setOnClickListener {
+            showEditPwDialog()
         }
 
         return view
     }
 
-    private fun updateToken(tlp: String?) {
-        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callUpToken = apiInterface.putDokterToken(tlp, "kosong")
+    private fun showEditPwDialog() {
+        val fm : FragmentManager? = fragmentManager
+        val alertDialog = EditPwDokterFragment().newInstance("editow")
+        alertDialog.show(fm, "fragment edit pw")
+    }
 
-        callUpToken.enqueue(object : Callback<PutPwResponse> {
-            override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
-//                Toast.makeText(context, "Gagal update token\n"+t, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
-                var statusPut = response.body()
-                try {
-                    if(statusPut!!.statusPut == "success"){
-//                        Toast.makeText(context, "Token berhasil dihapus", Toast.LENGTH_SHORT).show()
-                    }
-                }catch (e:Exception){}
-            }
-
-        })
+    private fun showLogoutDialog(){
+        val fm : FragmentManager? = fragmentManager
+        val alertDialog = LogoutDialogDokter().newInstance("hehe")
+        alertDialog.show(fm, "Fragment Logout")
     }
 
     override fun showLoading() {

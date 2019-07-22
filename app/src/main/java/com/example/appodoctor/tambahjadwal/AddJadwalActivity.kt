@@ -1,4 +1,4 @@
-package com.example.appodoctor.activity
+package com.example.appodoctor.tambahjadwal
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -6,25 +6,18 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import com.example.appodoctor.AppPreferences
-import com.example.appodoctor.HomeDokterActivity
 import com.example.appodoctor.R
-import com.example.appodoctor.fragment.HomeDocter
-import com.example.appodoctor.model.JadwalModel
-import com.example.appodoctor.presenter.AddJadwalPresenter
-import com.example.appodoctor.presenter.JadwalPresenter
-import com.example.appodoctor.view.AddJadwalView
-import com.example.appodoctor.view.JadwalView
+import com.example.appodoctor.activity.ManageJadwalActivity
 import kotlinx.android.synthetic.main.activity_add_jadwal.*
 import java.util.*
-import kotlin.collections.ArrayList
 
-class AddJadwalActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AddJadwalView {
+class AddJadwalActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
+    AddJadwalView {
 
     lateinit var pref : AppPreferences
     lateinit var addJadwalPresenter: AddJadwalPresenter

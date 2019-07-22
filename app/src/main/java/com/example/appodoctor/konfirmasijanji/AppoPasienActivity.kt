@@ -1,7 +1,5 @@
-package com.example.appodoctor.activity
+package com.example.appodoctor.konfirmasijanji
 
-import android.content.Context
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,21 +7,14 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View.*
 import android.widget.Toast
-import com.example.appodoctor.HomeDokterActivity
 import com.example.appodoctor.R
-import com.example.appodoctor.fragment.HomeDocter
 import com.example.appodoctor.model.*
-import com.example.appodoctor.presenter.AppointmentPresenter
-import com.example.appodoctor.presenter.KonfirmasiPasien
-import com.example.appodoctor.presenter.StatusPresenter
+import com.example.appodoctor.cekstatus.StatusPresenter
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.KonfirPasienView
-import com.example.appodoctor.view.ListAppoView
-import com.example.appodoctor.view.StatusView
+import com.example.appodoctor.cekstatus.StatusView
 import kotlinx.android.synthetic.main.activity_appo_pasien.*
 import kotlinx.android.synthetic.main.activity_appo_pasien.tvNamaPasien
-import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,7 +44,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
 
         konfirmasiPasien = KonfirmasiPasien(this, this)
 
-        statusPresenter = StatusPresenter(this,this)
+        statusPresenter = StatusPresenter(this, this)
         statusPresenter.getStatusByIdAppo(id_appo)
 
     }
@@ -177,7 +168,9 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
 //        val i = Intent(this, ListAppoActivity::class.java)
 //        startActivity(i)
 //        finish()
-        statusPresenter.getStatusByIdAppo(id_appo)
+        Handler().postDelayed({
+            statusPresenter.getStatusByIdAppo(id_appo)
+        }, 600)
     }
 
     override fun showLoading() {

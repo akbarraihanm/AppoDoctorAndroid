@@ -1,4 +1,4 @@
-package com.example.appodoctor.activity
+package com.example.appodoctor.jadwaldokter
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -9,10 +9,6 @@ import android.view.View.VISIBLE
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvJadwalAdapter
 import com.example.appodoctor.model.JadwalModel
-import com.example.appodoctor.presenter.JadwalPresenter
-import com.example.appodoctor.service.ApiClient
-import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.JadwalView
 import kotlinx.android.synthetic.main.activity_item_jadwal.*
 
 class ItemJadwalActivity : AppCompatActivity(), JadwalView {

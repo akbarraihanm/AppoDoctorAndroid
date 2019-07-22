@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
+import com.example.appodoctor.buatjanji.KonfirmasiActivity
 import com.example.appodoctor.model.AppoResponse
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.JadwalResponse
@@ -41,6 +41,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
     lateinit var poliNameString : String
     lateinit var dokterNameString : String
     lateinit var jamString : String
+    var count = 0
 
     lateinit var pref : AppPreferences
 
@@ -56,8 +57,6 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         var idPasien = "idpasien"
 
         var selectedIdJadwal = "idjadwalasda"
-
-        var count = 0
 
     }
 
@@ -115,7 +114,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
     override fun showPoliItem(polName: ArrayList<String>, polId: ArrayList<String>) {
 
-        val spinnerPoliAdapter  = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, polName)
+        val spinnerPoliAdapter  = ArrayAdapter(applicationContext, R.layout.spinner_item, polName)
+        spinnerPoliAdapter.setDropDownViewResource(R.layout.spinner_item)
         spPoli.adapter = spinnerPoliAdapter
         spPoli.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -148,7 +148,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
             btLanjut.isEnabled = false
         }
 //        visibleItems()
-        val spinnerDokterAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, dokName)
+        val spinnerDokterAdapter = ArrayAdapter(applicationContext, R.layout.spinner_item, dokName)
+        spinnerDokterAdapter.setDropDownViewResource(R.layout.spinner_item)
         spDokter.adapter = spinnerDokterAdapter
         spDokter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -255,19 +256,22 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         var selected = ""+year+"-"+(monthOfYear+1)+"-"+dayOfMonth
+
+
         selectedJadwal = selected
 
         tvSelectedDate.text = selected
+        tvpilihjadwal.visibility = GONE
+        spJadwal.visibility = GONE
+        showLoading()
 
-        tvpilihjadwal.visibility = VISIBLE
-        spJadwal.visibility = VISIBLE
         var listJadwal : ArrayList<JadwalModel>
 
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
         val callJadwal = apiInterface.getJadwalByTgl(selectedJadwal, selectedIdDokter)
         callJadwal.clone().enqueue( object : Callback<JadwalResponse>{
             override fun onFailure(call: Call<JadwalResponse>, t: Throwable) {
-                Toast.makeText(this@BuatJanjiActivity, "Gagal ambil item", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@BuatJanjiActivity, "Koneksi gagal", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<JadwalResponse>, response: Response<JadwalResponse>) {
@@ -284,7 +288,6 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                     spJadwal.adapter = spinnerAdapter
                     spJadwal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {
-
                         }
 
                         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -295,8 +298,10 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                             val format2 = formatter.parse(listJadwal[position].jamSelesai)
 //                            val formatted1 = formatter.format(format1)
 //                            val formatted2 = formatter.format(format2)
-                            appoByJadwalId(selectedIdJadwal)
-                            setDifferenTime(format1, format2)
+                            Log.d("selectedJadwal", selectedIdJadwal)
+                            appoByJadwalId(selectedIdJadwal, format1, format2)
+//                            setDifferenTime(format1, format2)
+//                            setDifferenTime(format1, format2)
 
                             Log.d("idJadwal", selectedIdJadwal)
                         }
@@ -306,6 +311,10 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
             }
 
         })
+
+        tvpilihjadwal.visibility = VISIBLE
+        spJadwal.visibility = VISIBLE
+        hideLoading()
 
     }
 
@@ -331,7 +340,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         val batas  = 6
         var j = 1
 
-        for(i in 0..24){
+        for(i in 0..hasil.toInt()){
             if(hasil == j.toString()){
                 if(count < (batas*j)){
                     btLanjut.alpha = 1f
@@ -347,7 +356,7 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         }
     }
 
-    private fun appoByJadwalId(jadwalId : String){
+    private fun appoByJadwalId(jadwalId : String,time1 : Date, time2 : Date){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
         val call = apiInterface.getAppoByJadwalId(jadwalId)
         call.enqueue(object : Callback<AppoResponse>{
@@ -361,7 +370,38 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                 try {
                     for(i in listAppo.indices){
                         count++
+
                     }
+                    var different = time2.time - time1.time
+
+                    val miliSecond = 1000
+                    val miliMinutes = miliSecond * 60
+                    val miliHours = miliMinutes * 60
+
+                    val elapsedHours = different / miliHours
+
+                    val hasil = ""+elapsedHours
+                    Log.d("hasilkurang", hasil)
+//        +":"+elapsedMinutes+":"+elapsedSeconds
+
+                    val batas  = 6
+                    var j = 1
+
+                    for(i in 0..hasil.toInt()){
+                        if(hasil == j.toString()){
+                            if(count < (batas*j)){
+                                btLanjut.alpha = 1f
+                                btLanjut.isEnabled = true
+                            }
+                            else{
+                                btLanjut.alpha = .4f
+                                btLanjut.isEnabled = false
+                                Toast.makeText(applicationContext, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        j++
+                    }
+                    Log.d("countLog",count.toString())
                 }catch (e:Exception){}
             }
 

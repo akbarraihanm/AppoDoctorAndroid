@@ -1,17 +1,17 @@
-package com.example.appodoctor.presenter
+package com.example.appodoctor.tambahjadwal
 
 import android.content.Context
 import android.widget.Toast
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.service.ApiClient
 import com.example.appodoctor.service.ApiInterface
-import com.example.appodoctor.view.AddJadwalView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AddJadwalPresenter (private val context: Context,
-                          private val addJadwalView: AddJadwalView){
+                          private val addJadwalView: AddJadwalView
+){
     fun postAddJadwal(dokId : String, tglAdd : String, jamMulai : String, jamSelesai : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
         val call = apiInterface.postAddJadwal(dokId, tglAdd, jamMulai, jamSelesai)

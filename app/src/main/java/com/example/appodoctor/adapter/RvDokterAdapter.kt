@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.appodoctor.HomeActivity
 import com.example.appodoctor.R
-import com.example.appodoctor.activity.ItemJadwalActivity
-import com.example.appodoctor.activity.JadwalActivity
+import com.example.appodoctor.jadwaldokter.ItemJadwalActivity
 import com.example.appodoctor.model.DokterModel
 import kotlinx.android.synthetic.main.rvdokter_item.view.*
 

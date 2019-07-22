@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        tools:context=".activity.CekStatusActivity">
+        tools:context=".cekstatus.CekStatusActivity">
     <ProgressBar
             android:id="@+id/pbStatus"
             android:layout_width="match_parent"

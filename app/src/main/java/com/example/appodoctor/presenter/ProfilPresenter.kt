@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.example.appodoctor.MainActivity
+import com.example.appodoctor.fragment.ProfileDokter
 import com.example.appodoctor.fragment.ProfileFragment
 import com.example.appodoctor.model.*
 import com.example.appodoctor.service.ApiClient
@@ -64,7 +65,7 @@ class ProfilPresenter (private val profilView: ProfilView,
 
         putPassword.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
-                Toast.makeText(context, ""+t, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
@@ -74,6 +75,29 @@ class ProfilPresenter (private val profilView: ProfilView,
 //                        getProfilData(idPasien)
                         Toast.makeText(context, "Password berhasil diubah", Toast.LENGTH_SHORT).show()
                         val i = Intent(context, ProfileFragment::class.java)
+                        context.startActivity(i)
+                    }
+                    else
+                        Toast.makeText(context, "Tidak dapat ubah password", Toast.LENGTH_SHORT).show()
+                }catch (e:Exception){}
+            }
+
+        })
+    }
+
+    fun updatePwDokter(idDokter : String, pwDokter : String){
+        val putPwDokter = apiInterface.putDokterPassword(idDokter, pwDokter)
+        putPwDokter.enqueue(object : Callback<PutPwResponse>{
+            override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
+                Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<PutPwResponse>, response: Response<PutPwResponse>) {
+                var statPut = response.body()
+                try {
+                    if(statPut!!.statusPut == "success"){
+                        Toast.makeText(context, "Password berhasil diubah", Toast.LENGTH_SHORT).show()
+                        val i = Intent(context, ProfileDokter::class.java)
                         context.startActivity(i)
                     }
                     else

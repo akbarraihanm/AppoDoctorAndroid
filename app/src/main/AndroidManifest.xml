@@ -17,42 +17,78 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:replace="android:appComponentFactory">
-        <activity android:name=".activity.ListAppoByJadwalActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".activity.ListAppoByJadwalActivity">
         </activity>
-        <activity android:name=".activity.TestNotifDoctor">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".activity.TestNotifDoctor">
         </activity>
-        <activity android:name=".activity.TestNotificationActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".activity.TestNotificationActivity">
         </activity>
-        <activity android:name=".activity.AppoPasienActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".konfirmasijanji.AppoPasienActivity">
         </activity>
-        <activity android:name=".activity.AddJadwalActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".tambahjadwal.AddJadwalActivity">
         </activity>
-        <activity android:name=".activity.ListAppoActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".listjanji.ListAppoActivity">
         </activity>
-        <activity android:name=".activity.ManageJadwalActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".activity.ManageJadwalActivity">
         </activity>
-        <activity android:name=".HomeDokterActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".HomeDokterActivity">
         </activity>
-        <activity android:name=".LoginDokterActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".LoginDokterActivity">
         </activity>
-        <activity android:name=".activity.CekStatusActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".cekstatus.CekStatusActivity">
         </activity>
-        <activity android:name=".activity.KonfirmasiActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".buatjanji.KonfirmasiActivity">
         </activity> <!-- <activity android:name=".Konfirmasi"> -->
         <!-- </activity> -->
-        <activity android:name=".activity.BuatJanjiActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".activity.BuatJanjiActivity">
         </activity>
-        <activity android:name=".activity.ItemJadwalActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".jadwaldokter.ItemJadwalActivity">
         </activity>
-        <activity android:name=".activity.JadwalActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".activity.JadwalActivity">
         </activity>
-        <activity android:name=".HomeActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".HomeActivity">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity
+                android:screenOrientation="portrait"
+                android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name=".HomeDokterActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

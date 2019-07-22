@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils.isEmpty
 import android.util.Log
 import android.view.MenuItem
 import android.view.View.INVISIBLE
@@ -16,8 +15,9 @@ import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvManageJadwalAdapter
 import com.example.appodoctor.model.JadwalModel
-import com.example.appodoctor.presenter.JadwalPresenter
-import com.example.appodoctor.view.JadwalView
+import com.example.appodoctor.jadwaldokter.JadwalPresenter
+import com.example.appodoctor.tambahjadwal.AddJadwalActivity
+import com.example.appodoctor.jadwaldokter.JadwalView
 import kotlinx.android.synthetic.main.activity_manage_jadwal.*
 
 class ManageJadwalActivity : AppCompatActivity(), JadwalView {

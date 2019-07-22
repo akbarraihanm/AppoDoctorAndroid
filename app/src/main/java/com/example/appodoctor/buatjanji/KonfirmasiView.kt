@@ -1,4 +1,4 @@
-package com.example.appodoctor.view
+package com.example.appodoctor.buatjanji
 
 import com.example.appodoctor.model.JadwalModel
 import com.example.appodoctor.model.Pasien
