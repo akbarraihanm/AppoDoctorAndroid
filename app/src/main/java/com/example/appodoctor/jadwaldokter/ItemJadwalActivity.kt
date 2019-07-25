@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvJadwalAdapter
 import com.example.appodoctor.model.JadwalModel
@@ -21,10 +22,14 @@ class ItemJadwalActivity : AppCompatActivity(), JadwalView {
     }
 
     lateinit var jadwalPresenter: JadwalPresenter
+    lateinit var pref : AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_jadwal)
+
+        pref = AppPreferences(this)
+        pref.setPreferences()
 
         string_id = intent.getStringExtra(string_id)
         supportActionBar?.title = "Jadwal"
@@ -35,7 +40,7 @@ class ItemJadwalActivity : AppCompatActivity(), JadwalView {
         tvIfNull.visibility = INVISIBLE
         tvNaDokWhenLoading.visibility = INVISIBLE
         jadwalPresenter = JadwalPresenter(this, this)
-        jadwalPresenter.getJadwalItem(string_id)
+        jadwalPresenter.getJadwalItem(pref.getUserApiKey(), string_id)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

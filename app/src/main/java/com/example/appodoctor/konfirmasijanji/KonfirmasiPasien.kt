@@ -12,9 +12,9 @@ import retrofit2.Response
 class KonfirmasiPasien (private val context: Context,
                         private val konfirPasienView : KonfirPasienView
 ){
-    fun putAppoPasien(idAppo : String, statusAppo : String, ketAppo : String){
+    fun putAppoPasien(apiKey : String, idAppo : String, statusAppo : String, ketAppo : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callPut = apiInterface.putStatusAppo(idAppo, statusAppo, ketAppo)
+        val callPut = apiInterface.putStatusAppo(apiKey, idAppo, statusAppo, ketAppo)
         callPut.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
                 Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()

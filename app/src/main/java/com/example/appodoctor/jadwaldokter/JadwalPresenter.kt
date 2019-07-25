@@ -15,9 +15,9 @@ import retrofit2.Response
 class JadwalPresenter(private val context: Context,
                       private val jadView : JadwalView
 ){
-    fun getJadwalItem(id : String){
+    fun getJadwalItem(apiKey : String, id : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val call = apiInterface.getJadwalByDokterId(id)
+        val call = apiInterface.getJadwalByDokterId(apiKey, id)
 
         var listJadwal : ArrayList<JadwalModel>
         call.enqueue(object : Callback<JadwalResponse>{
@@ -34,9 +34,9 @@ class JadwalPresenter(private val context: Context,
 
         })
     }
-    fun deleteJadwalItem(idJadwal : String){
+    fun deleteJadwalItem(apiKey: String, idJadwal : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callDelete = apiInterface.deleteJadwal(idJadwal)
+        val callDelete = apiInterface.deleteJadwal(apiKey, idJadwal)
 
         callDelete.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {

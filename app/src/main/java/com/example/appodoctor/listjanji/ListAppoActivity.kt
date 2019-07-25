@@ -40,9 +40,9 @@ class ListAppoActivity : AppCompatActivity(), ListAppoView {
         tvDokName.text = pref.getNameUser()
 
         rvlistAppo.layoutManager = LinearLayoutManager(this)
-        appointmentPresenter.getItemListAppo(pref.getUserId())
+        appointmentPresenter.getItemListAppo(pref.getUserApiKey(), pref.getUserId())
         swipeRefreshLayout.setOnRefreshListener {
-            appointmentPresenter.getItemListAppo(pref.getUserId())
+            appointmentPresenter.getItemListAppo(pref.getUserApiKey(),pref.getUserId())
         }
     }
 

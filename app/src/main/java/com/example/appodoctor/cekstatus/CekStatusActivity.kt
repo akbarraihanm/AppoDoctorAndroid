@@ -35,7 +35,7 @@ class CekStatusActivity : AppCompatActivity(), StatusView {
         rvStatusAppo.layoutManager = LinearLayoutManager(this)
 
         statusPresenter = StatusPresenter(this, this)
-        statusPresenter.getStatusItem(pasId)
+        statusPresenter.getStatusItem(pref.getUserApiKey(),pasId)
 
         supportActionBar?.title = "Cek Status"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

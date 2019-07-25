@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), LoginView {
                             TOKENKU = token
                             saveToken(token, etNoRm.text.toString())
                             Log.d("norm", TOKENKU)
-                            updateToken(NORM, TOKENKU)
+                            updateToken(pref.getUserApiKey(),NORM, TOKENKU)
                         }
                         else{
                         }
@@ -98,18 +98,19 @@ class MainActivity : AppCompatActivity(), LoginView {
         dbFirebase.child(""+key).setValue(firebase)
     }
 
-    override fun doLogin(id: String, status : String, name : String) {
+    override fun doLogin(id: String, status : String, name : String, apiKey : String) {
         pref.setUserId(id)
         pref.setUserLogin(status)
+        pref.setUserApiKey(apiKey)
         Log.d("uid",pref.getUserId())
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun updateToken(norm : String, tokenPas : String){
+    private fun updateToken(apiKey: String, norm : String, tokenPas : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callUpToken = apiInterface.putPasienToken(norm, tokenPas)
+        val callUpToken = apiInterface.putPasienToken(apiKey, norm, tokenPas)
 
         callUpToken.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {

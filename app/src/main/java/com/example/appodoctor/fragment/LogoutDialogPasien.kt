@@ -36,7 +36,7 @@ class LogoutDialogPasien : DialogFragment(){
                     DialogInterface.OnClickListener { dialog, id ->
                         pref.setUserId("")
                         var normPasien = ProfileFragment.norm
-                        updateToken(normPasien)
+                        updateToken(pref.getUserApiKey(),normPasien)
                         val i = Intent(context!!, MainActivity::class.java)
                         startActivity(i)
                         activity!!.finish()
@@ -51,9 +51,9 @@ class LogoutDialogPasien : DialogFragment(){
         }!!
     }
 
-    private fun updateToken(normPasien: String) {
+    private fun updateToken(apiKey : String, normPasien: String) {
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callUpToken = apiInterface.putPasienToken(normPasien, "kosong")
+        val callUpToken = apiInterface.putPasienToken(apiKey, normPasien, "kosong")
 
         callUpToken.enqueue(object : Callback<PutPwResponse> {
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {

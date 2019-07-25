@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View.*
 import android.widget.Toast
+import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.model.*
 import com.example.appodoctor.cekstatus.StatusPresenter
@@ -30,6 +31,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
 
     lateinit var statusPresenter : StatusPresenter
     lateinit var konfirmasiPasien : KonfirmasiPasien
+    lateinit var pref : AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +44,13 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
 
         linearLayout.visibility = INVISIBLE
 
+        pref = AppPreferences(this)
+        pref.setPreferences()
+
         konfirmasiPasien = KonfirmasiPasien(this, this)
 
         statusPresenter = StatusPresenter(this, this)
-        statusPresenter.getStatusByIdAppo(id_appo)
+        statusPresenter.getStatusByIdAppo(pref.getUserApiKey(),id_appo)
 
     }
 
@@ -86,7 +91,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
                 val keteranganAppo = "-"
                 val judul = "Notifikasi"
                 val pesan = "Update status permintaan janji : "+statusAppo
-                konfirmasiPasien.putAppoPasien(id_appo, statusAppo, keteranganAppo)
+                konfirmasiPasien.putAppoPasien(pref.getUserApiKey(),id_appo, statusAppo, keteranganAppo)
                 Handler().postDelayed({
                     pushNotification(TOKEN_PAS, judul, pesan)
                 }, 2000)
@@ -96,7 +101,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
                 val keteranganAppo = etKeterangan.text.toString()
                 val judul = "Notifikasi"
                 val pesan = "Update status permintaan janji : "+statusAppo
-                konfirmasiPasien.putAppoPasien(id_appo, statusAppo, keteranganAppo)
+                konfirmasiPasien.putAppoPasien(pref.getUserApiKey(), id_appo, statusAppo, keteranganAppo)
                 Handler().postDelayed({
                     pushNotification(TOKEN_PAS, judul, pesan)
                 }, 2000)
@@ -113,7 +118,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
                 val keteranganAppo = etKeterangan.text.toString()
                 val judul = "Notifikasi"
                 val pesan = "Update status permintaan janji : "+statusAppo
-                konfirmasiPasien.putAppoPasien(id_appo, statusAppo, keteranganAppo)
+                konfirmasiPasien.putAppoPasien(pref.getUserApiKey(),id_appo, statusAppo, keteranganAppo)
                 Handler().postDelayed({
                     pushNotification(TOKEN_PAS, judul, pesan)
                 }, 2000)
@@ -126,7 +131,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
 
     private fun getTokenPasien(id : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callToken = apiInterface.getPasienData(id)
+        val callToken = apiInterface.getPasienData(pref.getUserApiKey(),id)
         callToken.enqueue(object : Callback<PasienResponse> {
             override fun onFailure(call: Call<PasienResponse>, t: Throwable) {
                 Toast.makeText(this@AppoPasienActivity, "Gagal ambil token", Toast.LENGTH_SHORT).show()
@@ -169,7 +174,7 @@ class AppoPasienActivity : AppCompatActivity(), StatusView, KonfirPasienView {
 //        startActivity(i)
 //        finish()
         Handler().postDelayed({
-            statusPresenter.getStatusByIdAppo(id_appo)
+            statusPresenter.getStatusByIdAppo(pref.getUserApiKey(),id_appo)
         }, 600)
     }
 

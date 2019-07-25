@@ -25,7 +25,7 @@ class LoginPresenter(private val loginView: LoginView,
                 var statLogin = response.body()
                 try {
                     if(statLogin!!.status == "sukses"){
-                        loginView.doLogin(statLogin!!.idPasien.toString(), statLogin!!.user.toString(), "")
+                        loginView.doLogin(statLogin.idPasien.toString(), statLogin.user.toString(), "", statLogin.apiKey.toString())
                         Toast.makeText(context, "Berhasil masuk",Toast.LENGTH_SHORT).show()
                     }
                     else Toast.makeText(context, "Nomor rekam medis atau password salah", Toast.LENGTH_SHORT).show()
@@ -48,7 +48,7 @@ class LoginPresenter(private val loginView: LoginView,
                 var statLogin = response.body()
                 try {
                     if(statLogin!!.status == "sukses"){
-                        loginView.doLogin(statLogin!!.idDokter.toString(), statLogin!!.user.toString(), statLogin!!.namaDokter.toString())
+                        loginView.doLogin(statLogin.idDokter.toString(), statLogin.user.toString(), statLogin.namaDokter.toString(), statLogin.apiKey.toString())
                         Toast.makeText(context, "Berhasil masuk",Toast.LENGTH_SHORT).show()
                     }
                     else Toast.makeText(context, "Nomor telepon atau password salah", Toast.LENGTH_SHORT).show()

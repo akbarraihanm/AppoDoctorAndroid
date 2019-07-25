@@ -20,9 +20,9 @@ class ProfilPresenter (private val profilView: ProfilView,
     val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
     lateinit var profilData : ArrayList<Pasien>
 
-    fun getProfilData(idPasien : String){
+    fun getProfilData(pasApiKey : String, idPasien : String){
 
-        val callProfilData = apiInterface.getPasienData(idPasien)
+        val callProfilData = apiInterface.getPasienData(pasApiKey,idPasien)
 
         callProfilData.enqueue(object : Callback<PasienResponse>{
             override fun onFailure(call: Call<PasienResponse>, t: Throwable) {
@@ -40,9 +40,9 @@ class ProfilPresenter (private val profilView: ProfilView,
         })
     }
 
-    fun getProfilDokter(idDokter : String){
+    fun getProfilDokter(apiKey : String, idDokter : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callProfil = apiInterface.getDokterById(idDokter)
+        val callProfil = apiInterface.getDokterById(apiKey,idDokter)
         var itemDokter : ArrayList<DokterModel>
         callProfil.enqueue(object : Callback<DokterResponse>{
             override fun onFailure(call: Call<DokterResponse>, t: Throwable) {
@@ -60,8 +60,8 @@ class ProfilPresenter (private val profilView: ProfilView,
         })
     }
 
-    fun updatePassword(idPasien: String,pwPasien : String){
-        val putPassword = apiInterface.putPasienPassword(idPasien,pwPasien)
+    fun updatePassword(apiKey: String, idPasien: String,pwPasien : String){
+        val putPassword = apiInterface.putPasienPassword(apiKey,idPasien,pwPasien)
 
         putPassword.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
@@ -85,8 +85,8 @@ class ProfilPresenter (private val profilView: ProfilView,
         })
     }
 
-    fun updatePwDokter(idDokter : String, pwDokter : String){
-        val putPwDokter = apiInterface.putDokterPassword(idDokter, pwDokter)
+    fun updatePwDokter(apiKey: String, idDokter : String, pwDokter : String){
+        val putPwDokter = apiInterface.putDokterPassword(apiKey, idDokter, pwDokter)
         putPwDokter.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
                 Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()

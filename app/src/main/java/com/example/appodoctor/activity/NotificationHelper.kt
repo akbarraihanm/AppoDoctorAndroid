@@ -30,7 +30,7 @@ class NotificationHelper {
         pref.setPreferences()
         if(pref.getUserLogin() == "dokter") {
             val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-            val call = apiInterface.getAppoByDokterId(pref.getUserId())
+            val call = apiInterface.getAppoByDokterId(pref.getUserApiKey(),pref.getUserId())
             call.enqueue(object : Callback<AppoResponse> {
                 override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
                     Toast.makeText(context, "" + t, Toast.LENGTH_SHORT).show()

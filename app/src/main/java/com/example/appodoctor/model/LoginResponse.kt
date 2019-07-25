@@ -14,5 +14,7 @@ data class LoginResponse (
     @SerializedName("user")
     var user : String? = null,
     @SerializedName("nama_dokter")
-    var namaDokter : String? = null
+    var namaDokter : String? = null,
+    @SerializedName("api_key")
+    var apiKey : String? = null
 )

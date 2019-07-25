@@ -34,7 +34,7 @@ class EditPwDokterFragment : DialogFragment(){
                         Toast.makeText(context, "Password harus diisi", Toast.LENGTH_SHORT).show()
                     } else{
                         var pwBaru = view.etPassword.text.toString()
-                        profilPresenter.updatePwDokter(idDok, pwBaru)
+                        profilPresenter.updatePwDokter(pref.getUserApiKey(),idDok, pwBaru)
                     }
                 }
                 .setNegativeButton("Batal") { dialog, id ->

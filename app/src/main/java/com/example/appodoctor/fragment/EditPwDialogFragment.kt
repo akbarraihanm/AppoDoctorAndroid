@@ -52,7 +52,7 @@ class EditPwDialogFragment : DialogFragment(){
                         else{
                             var pwBaru = view.etPassword.text.toString()
                             Log.d("idPas",pwBaru)
-                            profilPresenter.updatePassword(idPas,pwBaru)
+                            profilPresenter.updatePassword(pref.getUserApiKey(),idPas,pwBaru)
                         }
                     })
                 .setNegativeButton("Batal",

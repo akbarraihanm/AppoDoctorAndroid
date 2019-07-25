@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvDokterAdapter
 import com.example.appodoctor.model.DokterModel
@@ -31,9 +32,8 @@ class JadwalActivity : AppCompatActivity(), DokterView {
     lateinit var poliNameString : String
     lateinit var dokterPresenter: DokterPresenter
     val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-    val call = apiInterface.getDokterByPoli()
-    val call2 = apiInterface.getPoliName()
     lateinit var poli : ArrayList<Poli>
+    lateinit var pref : AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +42,10 @@ class JadwalActivity : AppCompatActivity(), DokterView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         rvDokter.layoutManager = LinearLayoutManager(this)
+        pref = AppPreferences(this)
+        pref.setPreferences()
+
+        val call2 = apiInterface.getPoliName(pref.getUserApiKey())
 
 //        val poliId = resources.getStringArray(R.array.poliId)
 //        val poliName = resources.getStringArray(R.array.poliName)
@@ -70,7 +74,7 @@ class JadwalActivity : AppCompatActivity(), DokterView {
                     spinnerPoli.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                         override fun onNothingSelected(parent: AdapterView<*>?) {
                             val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
-                            val call = apiInterface2.getDokterByPoli()
+                            val call = apiInterface2.getDokterByPoli(pref.getUserApiKey())
                             dokterPresenter = DokterPresenter(call, this@JadwalActivity, this@JadwalActivity)
                             dokterPresenter.getDokterItem()
                         }
@@ -82,7 +86,7 @@ class JadwalActivity : AppCompatActivity(), DokterView {
                             rvDokter.adapter = null
 
                             val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
-                            val call = apiInterface2.getDokterByPoliId(savedPoliId[position]!!)
+                            val call = apiInterface2.getDokterByPoliId(pref.getUserApiKey(),savedPoliId[position]!!)
                             dokterPresenter = DokterPresenter(call, this@JadwalActivity, this@JadwalActivity)
                             dokterPresenter.getDokterItem()
 

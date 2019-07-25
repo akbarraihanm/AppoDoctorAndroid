@@ -12,9 +12,9 @@ import retrofit2.Response
 
 class StatusPresenter (private val statusView: StatusView,
                        private val context: Context){
-    fun getStatusItem(id : String){
+    fun getStatusItem(apiKey : String, id : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callStatusItem = apiInterface.getAppoByPasienId(id)
+        val callStatusItem = apiInterface.getAppoByPasienId(apiKey,id)
         var listStatus : ArrayList<Appointment>
 
         callStatusItem.enqueue(object : Callback<AppoResponse>{
@@ -32,10 +32,10 @@ class StatusPresenter (private val statusView: StatusView,
 
         })
     }
-    fun getStatusByIdAppo(id : String){
+    fun getStatusByIdAppo(apiKey: String, id : String){
         var objItem : ArrayList<Appointment>
         val apiInterface  = ApiClient.getClient().create(ApiInterface::class.java)
-        val callStatus = apiInterface.getAppoById(id)
+        val callStatus = apiInterface.getAppoById(apiKey,id)
 
         callStatus.enqueue(object : Callback<AppoResponse>{
             override fun onFailure(call: Call<AppoResponse>, t: Throwable) {

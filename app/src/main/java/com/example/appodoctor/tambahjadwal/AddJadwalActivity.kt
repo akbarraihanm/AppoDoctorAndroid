@@ -30,6 +30,9 @@ class AddJadwalActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
     var jamselesai : String = ""
 
     @SuppressLint("NewApi")
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_jadwal)
@@ -83,7 +86,7 @@ class AddJadwalActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         }
 
         btAdd.setOnClickListener {
-            addJadwalPresenter.postAddJadwal(pref.getUserId(), tgl, jammulai, jamselesai)
+            addJadwalPresenter.postAddJadwal(pref.getUserApiKey(),pref.getUserId(), tgl, jammulai, jamselesai)
         }
 
     }

@@ -36,7 +36,7 @@ class LogoutDialogDokter : DialogFragment(){
                     DialogInterface.OnClickListener { dialog, id ->
                         pref.setUserId("")
                         var notelpdoc = ProfileDokter.notelpDokter
-                        updateToken(notelpdoc)
+                        updateToken(pref.getUserApiKey(),notelpdoc)
                         val i = Intent(context!!, LoginDokterActivity::class.java)
                         startActivity(i)
                         activity!!.finish()
@@ -51,9 +51,9 @@ class LogoutDialogDokter : DialogFragment(){
         }!!
     }
 
-    private fun updateToken(tlp: String?) {
+    private fun updateToken(apiKey : String, tlp: String?) {
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callUpToken = apiInterface.putDokterToken(tlp, "kosong")
+        val callUpToken = apiInterface.putDokterToken(apiKey, tlp, "kosong")
 
         callUpToken.enqueue(object : Callback<PutPwResponse> {
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {

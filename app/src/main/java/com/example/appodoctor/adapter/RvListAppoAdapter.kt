@@ -11,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.activity.ListAppoByJadwalActivity
 import com.example.appodoctor.model.AppoResponse
@@ -51,12 +52,16 @@ class RvListAppoAdapter (private val context: Context, private val listJadwal : 
             var totalDiterima = "1"
             var totalDitolak = "2"
         }
+
+        lateinit var pref : AppPreferences
 //Canceled Model Object
 //        private var la : Appointment? = null
         private var jd : JadwalModel? = null
         @SuppressLint("NewApi")
         fun bind(jd : JadwalModel, con : Context, id : String){
             this.jd = jd
+            pref = AppPreferences(con)
+            pref.setPreferences()
             with(itemView){
                 with(jd){
 //                    tvNamaPasien.text = namaPasien
@@ -74,7 +79,7 @@ class RvListAppoAdapter (private val context: Context, private val listJadwal : 
                     if(tgl!! >= curDate){
                         cvListAppo.visibility = VISIBLE
                         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-                        val call = apiInterface.getAppoByJadwalId(idJadwal)
+                        val call = apiInterface.getAppoByJadwalId(pref.getUserApiKey(),idJadwal)
                         call.enqueue(object : Callback<AppoResponse>{
                             override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
                                 Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()

@@ -78,7 +78,7 @@ class ProfileFragment : Fragment(), ProfilView {
         pref.setPreferences()
 
         profilPresenter = ProfilPresenter(this, context!!)
-        profilPresenter.getProfilData(pref.getUserId())
+        profilPresenter.getProfilData(pref.getUserApiKey(),pref.getUserId())
 
         Log.d("uid",pref.getUserId())
         view.btKeluar.setOnClickListener {

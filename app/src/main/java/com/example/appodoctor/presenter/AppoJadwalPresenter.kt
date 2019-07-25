@@ -11,9 +11,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class AppoJadwalPresenter (private val context: Context, private val appoJadwalView : AppoJadwalView){
-    fun getAppoByJadwalItem(idJadwal : String){
+    fun getAppoByJadwalItem(apiKey : String, idJadwal : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val call = apiInterface.getAppoByJadwalId(idJadwal)
+        val call = apiInterface.getAppoByJadwalId(apiKey,idJadwal)
         call.enqueue(object : Callback<AppoResponse>{
             override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
                 Toast.makeText(context, "Koneksi gagal", Toast.LENGTH_SHORT).show()

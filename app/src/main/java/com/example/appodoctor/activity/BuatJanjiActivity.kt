@@ -34,13 +34,10 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
     lateinit var buatJanjiPresenter: BuatJanjiPresenter
     val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
 
-    val callPoli = apiInterface.getPoliName()
-    val callDokter = apiInterface.getDokterByPoli()
-    val callJadwal = apiInterface.getJadwalByDokter()
-
     lateinit var poliNameString : String
     lateinit var dokterNameString : String
     lateinit var jamString : String
+
     var count = 0
 
     lateinit var pref : AppPreferences
@@ -67,6 +64,10 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
         pref.setPreferences()
         idPasien = pref.getUserId()
         Log.d("idpas", idPasien)
+
+        val callPoli = apiInterface.getPoliName(pref.getUserApiKey())
+        val callDokter = apiInterface.getDokterByPoli(pref.getUserApiKey())
+        val callJadwal = apiInterface.getJadwalByDokter(pref.getUserApiKey())
 
         val intent = Intent(this, KonfirmasiActivity::class.java)
 
@@ -132,7 +133,9 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                 tvSelectedDate.text = selectedJadwal
 //                invisibleItems()
                 val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
-                val callDokter2 = apiInterface2.getDokterByPoliId(polId[position]!!)
+                val callDokter2 = apiInterface2.getDokterByPoliId(pref.getUserApiKey(),polId[position]!!)
+                val callPoli = apiInterface.getPoliName(pref.getUserApiKey())
+                val callJadwal = apiInterface.getJadwalByDokter(pref.getUserApiKey())
                 buatJanjiPresenter = BuatJanjiPresenter(callPoli,callDokter2,callJadwal,this@BuatJanjiActivity,this@BuatJanjiActivity)
                 buatJanjiPresenter.getDokterItem()
                 buatJanjiPresenter.getJadwalItem()
@@ -171,7 +174,9 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
                 }
                 btSelectDate.visibility = INVISIBLE
                 val apiInterface2 = ApiClient.getClient().create(ApiInterface::class.java)
-                val callJadwal2 = apiInterface2.getJadwalByDokterId(dokId[position]!!)
+                val callJadwal2 = apiInterface2.getJadwalByDokterId(pref.getUserApiKey(),dokId[position]!!)
+                val callPoli = apiInterface.getPoliName(pref.getUserApiKey())
+                val callDokter = apiInterface.getDokterByPoli(pref.getUserApiKey())
                 buatJanjiPresenter = BuatJanjiPresenter(callPoli,callDokter,callJadwal2, this@BuatJanjiActivity, this@BuatJanjiActivity)
                 buatJanjiPresenter.getJadwalItem()
             }
@@ -180,6 +185,17 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
     }
 
     override fun showJadwalItem(listJadwal: ArrayList<JadwalModel>) {
+
+        var calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+
+        var date : Date? = null
+
+        val currenDate = SimpleDateFormat("yyyy-MM-dd")
+        val curDate = currenDate.parse(currenDate.format(Date()))
 
         if(listJadwal.isEmpty()){
             btSelectDate.text = "Jadwal Tidak Ada"
@@ -197,19 +213,8 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
             btSelectDate.isEnabled = true
             btSelectDate.visibility = VISIBLE
             btSelectDate.setOnClickListener {
-                var calendar = Calendar.getInstance()
-                val year = calendar.get(Calendar.YEAR)
-                val month = calendar.get(Calendar.MONTH)
-                val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
 
                 datePickerDialog = DatePickerDialog.newInstance(this, year,month,dayOfMonth)
-
-                val sdf = SimpleDateFormat("yyyy-MM-dd")
-
-                var date : Date? = null
-
-                val currenDate = SimpleDateFormat("yyyy-MM-dd")
-                val curDate = currenDate.parse(currenDate.format(Date()))
 
                 for(i in listJadwal.indices){
                     try {
@@ -318,47 +323,9 @@ class BuatJanjiActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListene
 
     }
 
-    private fun setDifferenTime(time1 : Date, time2 : Date){
-        var different = time2.time - time1.time
-
-        val miliSecond = 1000
-        val miliMinutes = miliSecond * 60
-        val miliHours = miliMinutes * 60
-
-        val elapsedHours = different / miliHours
-        different = different % miliHours
-
-//        val elapsedMinutes = different / miliMinutes
-//        different = different % miliMinutes
-//
-//        val elapsedSeconds = different / miliSecond
-
-        val hasil = ""+elapsedHours
-        Log.d("hasilkurang", hasil)
-//        +":"+elapsedMinutes+":"+elapsedSeconds
-
-        val batas  = 6
-        var j = 1
-
-        for(i in 0..hasil.toInt()){
-            if(hasil == j.toString()){
-                if(count < (batas*j)){
-                    btLanjut.alpha = 1f
-                    btLanjut.isEnabled = true
-                }
-                else{
-                    btLanjut.alpha = .4f
-                    btLanjut.isEnabled = false
-                    Toast.makeText(this, "Kuota antrian penuh, silahkan pilih hari lain", Toast.LENGTH_SHORT).show()
-                }
-            }
-            j++
-        }
-    }
-
     private fun appoByJadwalId(jadwalId : String,time1 : Date, time2 : Date){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val call = apiInterface.getAppoByJadwalId(jadwalId)
+        val call = apiInterface.getAppoByJadwalId(pref.getUserApiKey(),jadwalId)
         call.enqueue(object : Callback<AppoResponse>{
             override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
                 Toast.makeText(this@BuatJanjiActivity, "Koneksi gagal", Toast.LENGTH_SHORT).show()

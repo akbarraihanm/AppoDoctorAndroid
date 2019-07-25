@@ -14,29 +14,10 @@ class AppointmentPresenter (private val context: Context,
                             private val listAppoView: ListAppoView
 ){
 
-//    fun getItemListAppo(idDokter : String){
-//        var listAppo : ArrayList<Appointment>
-//        val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-//        val callItem = apiInterface.getAppoByDokterId(idDokter)
-//
-//        callItem.enqueue(object : Callback<AppoResponse>{
-//            override fun onFailure(call: Call<AppoResponse>, t: Throwable) {
-//                Toast.makeText(context, "Gagal ambil item", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onResponse(call: Call<AppoResponse>, response: Response<AppoResponse>) {
-//                listAppo = response.body()!!.data
-//                try {
-//                    listAppoView.showListAppo(listAppo)
-//                }catch (e:Exception){}
-//            }
-//
-//        })
-//    }
-    fun getItemListAppo(idDokter : String){
+    fun getItemListAppo(apiKey : String, idDokter : String){
         var listJadwal : ArrayList<JadwalModel>
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callItem = apiInterface.getJadwalByDokterId(idDokter)
+        val callItem = apiInterface.getJadwalByDokterId(apiKey,idDokter)
 
         callItem.enqueue(object : Callback<JadwalResponse>{
             override fun onFailure(call: Call<JadwalResponse>, t: Throwable) {

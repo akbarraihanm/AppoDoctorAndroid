@@ -12,9 +12,9 @@ import retrofit2.Response
 class KonfirmasiPresenter (private val konfirmasiView: KonfirmasiView,
                            private val context: Context){
 
-    fun getPasienItem(idPas : String){
+    fun getPasienItem(pasApiKey : String, idPas : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callPasienItem = apiInterface.getPasienData(idPas)
+        val callPasienItem = apiInterface.getPasienData(pasApiKey, idPas)
         var itemPasien : ArrayList<Pasien>
 
         callPasienItem.enqueue(object : Callback<PasienResponse>{
@@ -33,9 +33,9 @@ class KonfirmasiPresenter (private val konfirmasiView: KonfirmasiView,
         })
     }
 
-    fun setKonfirmasi(tgl : String, pasId : String, dokId : String, polId : String){
+    fun setKonfirmasi(apiKey : String, tgl : String, pasId : String, dokId : String, polId : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callPostConfirm = apiInterface.postAppoData(tgl,pasId,dokId,polId)
+        val callPostConfirm = apiInterface.postAppoData(apiKey,tgl,pasId,dokId,polId)
 
         callPostConfirm.enqueue(object : Callback<PostAppo>{
             override fun onFailure(call: Call<PostAppo>, t: Throwable) {

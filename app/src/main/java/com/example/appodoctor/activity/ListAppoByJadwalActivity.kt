@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.adapter.RvListAppoJadwalAdapter
 import com.example.appodoctor.model.Appointment
@@ -23,10 +24,15 @@ class ListAppoByJadwalActivity : AppCompatActivity(), AppoJadwalView {
     }
 
     lateinit var appoJadwalPresenter : AppoJadwalPresenter
+    lateinit var pref : AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_appo_by_jadwal)
+
+        pref = AppPreferences(this)
+        pref.setPreferences()
+
         idJadwalForAppo = intent.getStringExtra(idJadwalForAppo)
         tglAppo = intent.getStringExtra(tglAppo)
         jamMulai = intent.getStringExtra(jamMulai)
@@ -42,7 +48,7 @@ class ListAppoByJadwalActivity : AppCompatActivity(), AppoJadwalView {
         appoJadwalPresenter = AppoJadwalPresenter(this, this)
         rvListAppo2.layoutManager = LinearLayoutManager(this)
         rvListAppo2.adapter = null
-        appoJadwalPresenter.getAppoByJadwalItem(idJadwalForAppo)
+        appoJadwalPresenter.getAppoByJadwalItem(pref.getUserApiKey(),idJadwalForAppo)
     }
 
     override fun showLoading() {

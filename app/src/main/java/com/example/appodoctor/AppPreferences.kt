@@ -11,6 +11,18 @@ class AppPreferences (private val context: Context){
         pref = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
+    fun setUserApiKey(apikey : String){
+        val editor = this.pref.edit()
+        val key = "user_apikey_key"
+        editor.putString(key, apikey)
+        editor.apply()
+    }
+
+    fun getUserApiKey() : String{
+        val key ="user_apikey_key"
+        return pref.getString(key, "")
+    }
+
     fun setUserLogin(stat : String){
         val editor = this.pref.edit()
         val key = "user_stat_key"

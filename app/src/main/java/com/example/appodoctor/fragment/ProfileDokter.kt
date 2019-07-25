@@ -57,7 +57,7 @@ class ProfileDokter : Fragment(), ProfilView {
         view.layoutProfil.visibility = INVISIBLE
 
         profilPresenter = ProfilPresenter(this, context!!)
-        profilPresenter.getProfilDokter(pref.getUserId())
+        profilPresenter.getProfilDokter(pref.getUserApiKey(),pref.getUserId())
 
         view.btKeluar.setOnClickListener {
             showLogoutDialog()

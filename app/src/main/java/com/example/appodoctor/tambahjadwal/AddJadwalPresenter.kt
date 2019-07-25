@@ -12,9 +12,9 @@ import retrofit2.Response
 class AddJadwalPresenter (private val context: Context,
                           private val addJadwalView: AddJadwalView
 ){
-    fun postAddJadwal(dokId : String, tglAdd : String, jamMulai : String, jamSelesai : String){
+    fun postAddJadwal(apiKey : String, dokId : String, tglAdd : String, jamMulai : String, jamSelesai : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val call = apiInterface.postAddJadwal(dokId, tglAdd, jamMulai, jamSelesai)
+        val call = apiInterface.postAddJadwal(apiKey,dokId, tglAdd, jamMulai, jamSelesai)
 
         call.enqueue(object : Callback<JadwalModel>{
             override fun onFailure(call: Call<JadwalModel>, t: Throwable) {

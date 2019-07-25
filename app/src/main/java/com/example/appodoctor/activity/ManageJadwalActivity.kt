@@ -42,7 +42,7 @@ class ManageJadwalActivity : AppCompatActivity(), JadwalView {
 
         swManage.setOnRefreshListener {
             jadwalPresenter = JadwalPresenter(this, this)
-            jadwalPresenter.getJadwalItem(id)
+            jadwalPresenter.getJadwalItem(pref.getUserApiKey(),id)
         }
 
         layoutManage.visibility = INVISIBLE
@@ -50,7 +50,7 @@ class ManageJadwalActivity : AppCompatActivity(), JadwalView {
         rvJadwal.layoutManager = LinearLayoutManager(this)
 
         jadwalPresenter = JadwalPresenter(this, this)
-        jadwalPresenter.getJadwalItem(id)
+        jadwalPresenter.getJadwalItem(pref.getUserApiKey(),id)
 
 //        swManage.isRefreshing = false
 
@@ -79,7 +79,7 @@ class ManageJadwalActivity : AppCompatActivity(), JadwalView {
 //            finish()
 //            startActivity(intent)
             Toast.makeText(this, "Berhasil hapus jadwal", Toast.LENGTH_SHORT).show()
-            jadwalPresenter.getJadwalItem(id)
+            jadwalPresenter.getJadwalItem(pref.getUserApiKey(),id)
         }, 1500)
     }
 

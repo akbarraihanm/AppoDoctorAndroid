@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import com.example.appodoctor.AppPreferences
 import com.example.appodoctor.R
 import com.example.appodoctor.activity.BuatJanjiActivity
 import com.example.appodoctor.model.DokterModel
@@ -25,6 +26,7 @@ import retrofit2.Response
 class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
 
     lateinit var konfirmasiPresenter: KonfirmasiPresenter
+    lateinit var pref : AppPreferences
 
     companion object{
         var poli_id = "poliid"
@@ -52,6 +54,9 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
         supportActionBar?.title = "Cek Data"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        pref = AppPreferences(this)
+        pref.setPreferences()
+
         konfirmasiPresenter = KonfirmasiPresenter(this, this)
 
         poliName = intent.getStringExtra(poliName)
@@ -71,7 +76,7 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
         Log.d("poliid", poid)
         doid = dokter_id
 
-        konfirmasiPresenter.getPasienItem(id_pasien)
+        konfirmasiPresenter.getPasienItem(pref.getUserApiKey(), id_pasien)
 
         btBatal.setOnClickListener {
             val intent = Intent(this, BuatJanjiActivity::class.java)
@@ -108,6 +113,7 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
             var judul = "Notifikasi"
             var body = "Ada Permintaan Janji Baru !"
             konfirmasiPresenter.setKonfirmasi(
+                pref.getUserApiKey(),
                 tappo,
                 pid,
                 dokter_id,
@@ -141,7 +147,7 @@ class KonfirmasiActivity : AppCompatActivity(), KonfirmasiView {
 
     private fun getTokenDokter(){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callToken = apiInterface.getDokterById(dokter_id)
+        val callToken = apiInterface.getDokterById(pref.getUserApiKey(),dokter_id)
         callToken.enqueue(object : Callback<DokterResponse>{
             override fun onFailure(call: Call<DokterResponse>, t: Throwable) {
                 Toast.makeText(this@KonfirmasiActivity, "Gagal ambil token", Toast.LENGTH_SHORT).show()

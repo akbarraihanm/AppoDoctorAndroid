@@ -71,7 +71,7 @@ class LoginDokterActivity : AppCompatActivity(), LoginView {
                             var token = task.result!!.token
                             DOC_TOKEN = token
                             saveToken(token, etTlp.text.toString())
-                            updateToken(NOTELP, DOC_TOKEN)
+                            updateToken(pref.getUserApiKey(),NOTELP, DOC_TOKEN)
                         }
                         else{
                         }
@@ -94,19 +94,20 @@ class LoginDokterActivity : AppCompatActivity(), LoginView {
         dbFirebase.child(""+key).setValue(firebase)
     }
 
-    override fun doLogin(id: String, status : String, name : String) {
+    override fun doLogin(id: String, status : String, name : String, apiKey : String) {
         pref.setUserId(id)
         pref.setUserLogin(status)
         pref.setNameUser(name)
+        pref.setUserApiKey(apiKey)
         Log.d("uid",pref.getUserId())
         val intent = Intent(this, HomeDokterActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun updateToken(noTelpDok : String, tokenDok : String){
+    private fun updateToken(apiKey: String, noTelpDok : String, tokenDok : String){
         val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
-        val callUpToken = apiInterface.putDokterToken(noTelpDok, tokenDok)
+        val callUpToken = apiInterface.putDokterToken(apiKey,noTelpDok, tokenDok)
 
         callUpToken.enqueue(object : Callback<PutPwResponse>{
             override fun onFailure(call: Call<PutPwResponse>, t: Throwable) {
